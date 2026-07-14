@@ -5,6 +5,9 @@ public class Player : MonoBehaviour
     public float moveSpeed = 5f;
     public float playerRadius = 1.0f;
     public float attackRangeMultiplier = 1.5f;
+    public float attackCooldown = 0.5f; // 攻撃のクールダウン時間
+
+    float lastAttackTime = 0f; // 最後に攻撃した時間
 
     // Update is called once per frame
     void Update()
@@ -24,7 +27,11 @@ public class Player : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            Attack();
+            if(Time.time - lastAttackTime >= attackCooldown)
+            {
+                Attack();
+                lastAttackTime = Time.time; // 攻撃した時間を更新
+            }
         }
 
         /*AutoAttack();*/
@@ -42,6 +49,7 @@ public class Player : MonoBehaviour
         foreach (Collider2D enemy in hitEnemies)
         {
             Debug.Log("敵を攻撃しました: " + enemy.name);
+            enemy.GetComponent<Enemy>().TakeDamage(1); // 仮のダメージ値を1とする
         }
     }
 
