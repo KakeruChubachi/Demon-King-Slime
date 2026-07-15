@@ -6,6 +6,9 @@ public class Player : MonoBehaviour
     public float playerRadius = 1.0f;
     public float attackRangeMultiplier = 1.5f;
     public float attackCooldown = 0.5f; // 攻撃のクールダウン時間
+    public int hp = 10; // プレイヤーの体力
+    public float damageCooldown = 1.0f; // ダメージを受けた後の無敵時間
+    float lastDamageTime = -999;
 
     float lastAttackTime = 0f; // 最後に攻撃した時間
 
@@ -67,5 +70,37 @@ public class Player : MonoBehaviour
         float attackRadius = playerRadius * attackRangeMultiplier;
 
         Gizmos.DrawWireSphere(transform.position, attackRadius);
+    }
+
+    // 敵(トリガー)に触れた瞬間、自動で呼ばれる関数
+    void OnTriggerStay2D(Collider2D other)
+    {
+        // TODO: other から Enemy スクリプトを取り出す(GetComponentを使う)
+        Enemy enemy = other.GetComponent<Enemy>();// ヒント: other.GetComponent<Enemy>()
+
+        // TODO: enemyがnullでない(=本当にEnemyだった)場合だけダメージ処理を行う
+        if (enemy != null)// ヒント: enemy != null という条件
+        {
+            if (Time.time - lastDamageTime >= damageCooldown)
+            {
+                TakeDamage(1); // 仮のダメージ量
+                lastDamageTime = Time.time; // ダメージを受けた時間を更新
+            }
+        }
+    }
+
+    // Player自身がダメージを受ける関数(Enemy.csのTakeDamageと同じ考え方)
+    public void TakeDamage(int damage)
+    {
+        // TODO: hp から damage を引く
+        hp -= damage;
+
+        // TODO: hp が 0 以下になったかどうかを調べる
+        if (hp <= 0)// TODO: 条件
+    {
+            // 今はひとまずログを出すだけにしておく
+            Debug.Log("ゲームオーバー");
+            FindFirstObjectByType<SceneFader>().FadeToScene("Result");
+        }
     }
 }
