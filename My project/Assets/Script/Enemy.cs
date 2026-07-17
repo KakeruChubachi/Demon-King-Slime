@@ -5,12 +5,20 @@ public class Enemy : MonoBehaviour
     public int hp = 10;
     public float moveSpeed = 2f;   // Enemy‚ÌˆÚ“®‘¬“x
     public Transform target;       // ’Ç‚¢‚©‚¯‚é‘ÎÛ(Player‚ğinspector‚Åİ’è)
+    public GameObject spawnOrb;
 
+    private void Start()
+    {
+        target = GameObject.FindWithTag("Player").transform;
+    }
     public void TakeDamage(int damage)
     {
         hp -= damage;
         if (hp <= 0)
         {
+            GameObject Orb = Instantiate(spawnOrb, transform.position, Quaternion.identity);
+            ExpOrb expOrb = Orb.GetComponent<ExpOrb>();
+            expOrb.target = target;
             Destroy(gameObject);
         }
     }
