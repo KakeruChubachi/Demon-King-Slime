@@ -7,11 +7,15 @@ public class Player : MonoBehaviour
     public float attackRangeMultiplier = 1.5f;//攻撃範囲
     public float attackCooldown = 1.0f; // 攻撃のクールダウン時間
     public int hp = 10; // プレイヤーの体力
+
     public int exp = 1;//経験値
+    public SkillOrb nearskillOrb;
+    SkillData skillData;
+
     public float damageCooldown = 1.0f; // ダメージを受けた後の無敵時間
     float lastDamageTime = -999;
-
     float lastAttackTime = 0f; // 最後に攻撃した時間
+    public LayerMask enemyLayer; // 敵のレイヤーを指定するための変数
 
     // Update is called once per frame
     void Update()
@@ -40,6 +44,14 @@ public class Player : MonoBehaviour
         */
 
         AutoAttack();
+
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            if(nearskillOrb != null)
+            {
+                skillData = nearskillOrb.GetSkillOrb();
+            }
+        }
     }
 
     void Attack()
@@ -48,7 +60,7 @@ public class Player : MonoBehaviour
         float attackRadius = playerRadius * attackRangeMultiplier;
 
         //attackRadiusの範囲内にいる敵を取得
-        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(transform.position, attackRadius);
+        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(transform.position, attackRadius,enemyLayer);
 
         //取得した敵の数だけ、仮の確認ログを出す
         foreach (Collider2D enemy in hitEnemies)
@@ -108,6 +120,22 @@ public class Player : MonoBehaviour
         {
             exp += expOrb.PickupExp();
             Debug.Log("現在の経験値："+ exp);
+        }
+
+        SkillOrb nearSkillOrb = other.GetComponent<SkillOrb>();
+        if(nearSkillOrb != null)
+        {
+            nearskillOrb = nearSkillOrb;
+        }
+
+    }
+
+    void OnTriggerExit2D(Collider2D other)
+    {
+        SkillOrb nearSkillOrb = other.GetComponent<SkillOrb>();
+        if(nearSkillOrb != null && nearSkillOrb == nearskillOrb)
+        {
+            nearskillOrb = null;
         }
     }
 

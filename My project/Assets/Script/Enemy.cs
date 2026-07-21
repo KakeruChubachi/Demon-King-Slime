@@ -6,6 +6,9 @@ public class Enemy : MonoBehaviour
     public float moveSpeed = 2f;   // Enemyの移動速度
     public Transform target;       // 追いかける対象(Playerをinspectorで設定)
     public GameObject spawnOrb;
+    public float dropRate = 0.05f; // ドロップ率(0.0～1.0)
+    public GameObject SkillOrbprefab;
+    public SkillData[] skillDatas; // スキルデータの配列
 
     private void Start()
     {
@@ -19,6 +22,17 @@ public class Enemy : MonoBehaviour
             GameObject Orb = Instantiate(spawnOrb, transform.position, Quaternion.identity);
             ExpOrb expOrb = Orb.GetComponent<ExpOrb>();
             expOrb.target = target;
+            if (Random.value < dropRate)
+            {// ドロップ率に応じてアイテムをドロップするか判定
+
+                int skills = Random.Range(0, skillDatas.Length);
+                SkillData skillData = skillDatas[skills];
+                GameObject skillOrb = Instantiate(SkillOrbprefab, transform.position, Quaternion.identity);
+                SkillOrb skillOrbComponent = skillOrb.GetComponent<SkillOrb>();
+                skillOrbComponent.skillData = skillData;
+                skillOrbComponent.target = target;
+            }
+           
             Destroy(gameObject);
         }
     }
