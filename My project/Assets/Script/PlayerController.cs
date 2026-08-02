@@ -9,6 +9,9 @@ public class Player : MonoBehaviour
     public int hp = 10; // プレイヤーの体力
 
     public int exp = 1;//経験値
+    public int nowLevel = 1;//現在のレベル
+    public int levelUpExp = 10;//レベルアップに必要な経験値
+    public UIController uIController;
     public SkillOrb nearskillOrb;
     SkillData skillData;
 
@@ -85,6 +88,17 @@ public class Player : MonoBehaviour
         }
      }
      
+    void LevelUp()
+    {
+        if(exp >= levelUpExp)
+        {
+            nowLevel++;
+            exp -= levelUpExp;
+            levelUpExp += 10; // 次のレベルアップに必要な経験値を増やす
+            uIController.SetSllimeLevel(nowLevel);
+            Debug.Log("レベルアップ！現在のレベル：" + nowLevel);
+        }
+    }
 
     void OnDrawGizmos()
     {
@@ -120,6 +134,7 @@ public class Player : MonoBehaviour
         {
             exp += expOrb.PickupExp();
             Debug.Log("現在の経験値："+ exp);
+            LevelUp();
         }
 
         SkillOrb nearSkillOrb = other.GetComponent<SkillOrb>();
