@@ -7,7 +7,6 @@ public class SceneFader : MonoBehaviour
 {
     public Image fadeImage;         // FadeImageをInspectorで設定
     public float fadeDuration = 1f; // フェードにかける時間(秒)
-    static SceneFader instance; // シングルトン用のインスタンス
 
     void Start()
     {
@@ -20,15 +19,7 @@ public class SceneFader : MonoBehaviour
     {
         // ① シーンをまたいでも消えないようにする
         // TODO: DontDestroyOnLoad を使う(対象は gameObject)
-        if(instance == null)
-        {
-            instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
+        DontDestroyOnLoad(gameObject);
     }
 
     // ② 外部から呼び出す入口。「このシーン名に遷移して」とお願いされる
