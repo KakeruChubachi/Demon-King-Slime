@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class SkillAbsorptionRange : MonoBehaviour
 {
-    public Player player;
+    public PlayerController player;
 
     void OnTriggerStay2D(Collider2D other)
     {

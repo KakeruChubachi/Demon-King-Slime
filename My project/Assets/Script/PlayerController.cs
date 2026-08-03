@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class PlayerController : MonoBehaviour
 {
     public float moveSpeed = 5f;
     public float playerRadius = 1.0f;
@@ -159,6 +159,7 @@ public class Player : MonoBehaviour
     {
         // TODO: hp ‚©‚ç damage ‚ðˆø‚­
         hp -= damage;
+        uIController.SetLife(hp);
 
         // TODO: hp ‚ª 0 ˆÈ‰º‚É‚È‚Á‚½‚©‚Ç‚¤‚©‚ð’²‚×‚é
         if (hp <= 0)// TODO: ðŒ
