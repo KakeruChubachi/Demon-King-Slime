@@ -20,6 +20,12 @@ public class Player : MonoBehaviour
     float lastAttackTime = 0f; // ÅŒã‚ÉUŒ‚‚µ‚½ŠÔ
     public LayerMask enemyLayer; // “G‚ÌƒŒƒCƒ„[‚ğw’è‚·‚é‚½‚ß‚Ì•Ï”
 
+    void Start()
+    {
+        uIController.SetSllimeLevel(nowLevel);
+        uIController.SetLife(hp);
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -159,6 +165,7 @@ public class Player : MonoBehaviour
     {
         // TODO: hp ‚©‚ç damage ‚ğˆø‚­
         hp -= damage;
+        uIController.SetLife(hp);
 
         // TODO: hp ‚ª 0 ˆÈ‰º‚É‚È‚Á‚½‚©‚Ç‚¤‚©‚ğ’²‚×‚é
         if (hp <= 0)// TODO: ğŒ

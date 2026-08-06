@@ -17,4 +17,9 @@ public class UIController : MonoBehaviour
     {
         slimeLabelText.text = "Lv:" + level;
     }
+
+    public void SetLife(int life)
+    {
+        lifeText.text = "ƒ‰ƒCƒt:" + life;
+    }
 }
