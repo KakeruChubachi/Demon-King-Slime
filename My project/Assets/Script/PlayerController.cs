@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public class Player : MonoBehaviour
 {
@@ -19,6 +20,8 @@ public class Player : MonoBehaviour
     float lastDamageTime = -999;
     float lastAttackTime = 0f; // 最後に攻撃した時間
     public LayerMask enemyLayer; // 敵のレイヤーを指定するための変数
+    public bool invinCible = false; // 無敵状態かどうかを示すフラグ
+    public float invincibleDuration = 2.0f; // 無敵状態の持続時間
 
     void Start()
     {
@@ -163,6 +166,10 @@ public class Player : MonoBehaviour
     // Player自身がダメージを受ける関数(Enemy.csのTakeDamageと同じ考え方)
     public void TakeDamage(int damage)
     {
+        if(invinCible)
+        {
+            return; // 無敵状態ならダメージを受けない
+        }
         // TODO: hp から damage を引く
         hp -= damage;
         uIController.SetLife(hp);
@@ -174,5 +181,29 @@ public class Player : MonoBehaviour
             Debug.Log("ゲームオーバー");
             FindFirstObjectByType<SceneFader>().FadeToScene("Result");
         }
+    }
+
+    public IEnumerator InvincibleCoroutine()
+    {
+        invinCible = true; // 無敵状態にする
+        yield return new WaitForSeconds(invincibleDuration); // 無敵状態の持続時間を待つ
+        invinCible = false; // 無敵状態を解除する
+    }
+
+    public void ActivateBarrier()
+    {
+        StartCoroutine(InvincibleCoroutine());
+    }
+
+    public void ActivateCopy()
+    {
+        // コピーの効果を発動する処理をここに追加
+        Debug.Log("コピーの効果を発動しました！");
+    }
+
+    public void ActivateAvoidance()
+    {
+        // 回避の効果を発動する処理をここに追加
+        Debug.Log("回避の効果を発動しました！");
     }
 }

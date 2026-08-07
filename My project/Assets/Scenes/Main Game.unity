@@ -273,8 +273,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SkillSlot
   SkillImage: {fileID: 177755538}
   SkillKey: 113
-  CooldownTime: 2
+  CooldownTime: 5
   nowTime: 0
+  player: {fileID: 710664057}
+  skillType: 0
 --- !u!114 &177755538
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -446,6 +448,8 @@ MonoBehaviour:
   SkillKey: 32
   CooldownTime: 2
   nowTime: 0
+  player: {fileID: 710664057}
+  skillType: 1
 --- !u!114 &449149047
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -699,7 +703,7 @@ MonoBehaviour:
   moveSpeed: 5
   playerRadius: 1
   attackRangeMultiplier: 2
-  attackCooldown: 0.5
+  attackCooldown: 100
   hp: 10
   exp: 1
   nowLevel: 1
@@ -710,6 +714,8 @@ MonoBehaviour:
   enemyLayer:
     serializedVersion: 2
     m_Bits: 64
+  invinCible: 0
+  invincibleDuration: 5
 --- !u!58 &710664058
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -975,6 +981,8 @@ MonoBehaviour:
   SkillKey: 101
   CooldownTime: 2
   nowTime: 0
+  player: {fileID: 710664057}
+  skillType: 2
 --- !u!1001 &1307233152
 PrefabInstance:
   m_ObjectHideFlags: 0
