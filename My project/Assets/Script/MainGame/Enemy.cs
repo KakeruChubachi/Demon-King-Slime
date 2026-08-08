@@ -9,6 +9,7 @@ public class Enemy : MonoBehaviour
     public float dropRate = 0.05f; // ドロップ率(0.0～1.0)
     public GameObject SkillOrbprefab;
     public SkillData[] skillDatas; // スキルデータの配列
+    public bool movementEnabled = true; // 移動を有効にするかどうかのフラグ
 
     private void Start()
     {
@@ -39,6 +40,10 @@ public class Enemy : MonoBehaviour
 
     void Update()
     {
+        if (!movementEnabled)
+        {
+            return;
+        }
         // ① Player方向への差(ベクトル)を求める
         Vector3 direction = target.position - transform.position;// TODO: target.position - transform.position
 
@@ -48,8 +53,8 @@ public class Enemy : MonoBehaviour
         // ③ 移動速度と時間を掛けて、実際の移動量にする
         Vector3 movement = direction * moveSpeed * Time.deltaTime;// TODO: direction * moveSpeed * Time.deltaTime
 
-    // ④ 位置を更新する
-    // TODO: transform.position に movement を加算する
-    transform.position += movement;
+        // ④ 位置を更新する
+        // TODO: transform.position に movement を加算する
+        transform.position += movement;
     }
 }

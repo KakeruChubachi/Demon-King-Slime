@@ -22,6 +22,7 @@ public class Player : MonoBehaviour
     public LayerMask enemyLayer; // 敵のレイヤーを指定するための変数
     public bool invinCible = false; // 無敵状態かどうかを示すフラグ
     public float invincibleDuration = 2.0f; // 無敵状態の持続時間
+    public GameObject barrierVisual;
 
     void Start()
     {
@@ -186,8 +187,10 @@ public class Player : MonoBehaviour
     public IEnumerator InvincibleCoroutine()
     {
         invinCible = true; // 無敵状態にする
+        barrierVisual.SetActive(true); // バリア状態のビジュアルを表示する
         yield return new WaitForSeconds(invincibleDuration); // 無敵状態の持続時間を待つ
         invinCible = false; // 無敵状態を解除する
+        barrierVisual.SetActive(false); // バリア状態のビジュアルを非表示にする
     }
 
     public void ActivateBarrier()
