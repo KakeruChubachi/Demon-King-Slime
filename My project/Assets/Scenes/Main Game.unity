@@ -661,6 +661,8 @@ MonoBehaviour:
   enemyPrefab: {fileID: 8524543450048362721, guid: 7d0be9288bb4c654e9baf81d6046edd4, type: 3}
   spawnInterval: 2
   spawnPosition: {fileID: 2131612874}
+  isSpawn: 1
+  spawnTime: 10
 --- !u!4 &474520239
 Transform:
   m_ObjectHideFlags: 0
@@ -2279,6 +2281,67 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 406995985033423084, guid: 481b217aa32e5f143ac8365cdf187fbe, type: 3}
   m_PrefabInstance: {fileID: 2691672118710062468}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &5296422787749092734
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4409322453525152732, guid: 28b4b4fc7f418304089d907bc667fe81, type: 3}
+      propertyPath: Bullet
+      value: 
+      objectReference: {fileID: 7511239864004692604, guid: 43964b60689bd5a4dbbea47b9ad3ed8c, type: 3}
+    - target: {fileID: 7479340947185172252, guid: 28b4b4fc7f418304089d907bc667fe81, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 5.45
+      objectReference: {fileID: 0}
+    - target: {fileID: 7479340947185172252, guid: 28b4b4fc7f418304089d907bc667fe81, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.12
+      objectReference: {fileID: 0}
+    - target: {fileID: 7479340947185172252, guid: 28b4b4fc7f418304089d907bc667fe81, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7479340947185172252, guid: 28b4b4fc7f418304089d907bc667fe81, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7479340947185172252, guid: 28b4b4fc7f418304089d907bc667fe81, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7479340947185172252, guid: 28b4b4fc7f418304089d907bc667fe81, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7479340947185172252, guid: 28b4b4fc7f418304089d907bc667fe81, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7479340947185172252, guid: 28b4b4fc7f418304089d907bc667fe81, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7479340947185172252, guid: 28b4b4fc7f418304089d907bc667fe81, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7479340947185172252, guid: 28b4b4fc7f418304089d907bc667fe81, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8970255389906177760, guid: 28b4b4fc7f418304089d907bc667fe81, type: 3}
+      propertyPath: m_Name
+      value: EnemyBulletAttack
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 28b4b4fc7f418304089d907bc667fe81, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -2291,3 +2354,4 @@ SceneRoots:
   - {fileID: 1664491618}
   - {fileID: 2131612875}
   - {fileID: 1923017718}
+  - {fileID: 5296422787749092734}

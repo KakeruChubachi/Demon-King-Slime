@@ -10,7 +10,7 @@ public class EnemyBulletAttack : MonoBehaviour
 
     void Start()
     {
-
+       target = GameObject.FindWithTag("Player").transform;
     }
 
     void Update()
