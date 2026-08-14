@@ -659,6 +659,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemySpawner
   enemyPrefab: {fileID: 8524543450048362721, guid: 7d0be9288bb4c654e9baf81d6046edd4, type: 3}
+  bulletenemyPrefab: {fileID: 8970255389906177760, guid: 28b4b4fc7f418304089d907bc667fe81, type: 3}
   spawnInterval: 2
   spawnPosition: {fileID: 2131612874}
   isSpawn: 1
@@ -2094,11 +2095,11 @@ PrefabInstance:
       objectReference: {fileID: 587957185058556469, guid: 743fc6f473c257141b2906b51e85208c, type: 3}
     - target: {fileID: 8396677509717556914, guid: 7d0be9288bb4c654e9baf81d6046edd4, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 3
+      value: 2.94
       objectReference: {fileID: 0}
     - target: {fileID: 8396677509717556914, guid: 7d0be9288bb4c654e9baf81d6046edd4, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -1.11
       objectReference: {fileID: 0}
     - target: {fileID: 8396677509717556914, guid: 7d0be9288bb4c654e9baf81d6046edd4, type: 3}
       propertyPath: m_LocalPosition.z

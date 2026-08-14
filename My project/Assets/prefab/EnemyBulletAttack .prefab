@@ -126,7 +126,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49976d099eb5aeb4fb0947971c6ee80a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyBulletAttack
-  Bullet: {fileID: 0}
+  Bullet: {fileID: 7511239864004692604, guid: 43964b60689bd5a4dbbea47b9ad3ed8c, type: 3}
   target: {fileID: 0}
   attackCooldown: 10
 --- !u!61 &2665252659021125515

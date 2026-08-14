@@ -3,6 +3,7 @@ using UnityEngine;
 public class EnemySpawner : MonoBehaviour
 {
     public GameObject enemyPrefab;//ê∂ê¨ÇµÇΩÇ¢ìG
+    public GameObject bulletenemyPrefab;
     public float spawnInterval = 2f;//âΩïbÇ≤Ç∆Ç…èoÇ∑Ç©
     public EnemySpawnenPosition spawnPosition;
     float nowTime = 0;//éûä‘åoâﬂÇÃãLò^
@@ -29,7 +30,8 @@ public class EnemySpawner : MonoBehaviour
         {
             Vector3 pos = spawnPosition.GetSpawnPosition();
             Instantiate(enemyPrefab, pos, Quaternion.identity);
-//          Instantiate(enemyPrefab, transform.position,Quaternion.identity );
+            Instantiate(bulletenemyPrefab, pos, Quaternion.identity);
+            //          Instantiate(enemyPrefab, transform.position,Quaternion.identity );
             nowTime = 0;
         }
 

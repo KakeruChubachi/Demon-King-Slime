@@ -139,6 +139,16 @@ public class Player : MonoBehaviour
             }
         }
 
+        EnemyBullet enemyBullet = other.GetComponent<EnemyBullet>();
+        if (enemyBullet != null)
+        {
+            if (Time.time - lastDamageTime >= damageCooldown)
+            {
+                TakeDamage(1);
+                lastDamageTime = Time.time; 
+            }
+        }
+
         ExpOrb expOrb = other.GetComponent<ExpOrb>();
         if(expOrb != null)
         {
