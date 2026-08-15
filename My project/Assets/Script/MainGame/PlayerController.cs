@@ -4,6 +4,8 @@ using System.Collections;
 public class Player : MonoBehaviour
 {
     public float moveSpeed = 5f;
+    public float DashSpeed = 10f;
+    public bool isDashing = false;
     public float playerRadius = 1.0f;
     public float attackRangeMultiplier = 1.5f;//攻撃範囲
     public float attackCooldown = 1.0f; // 攻撃のクールダウン時間
@@ -17,6 +19,7 @@ public class Player : MonoBehaviour
     SkillData skillData;
 
     public float damageCooldown = 1.0f; // ダメージを受けた後の無敵時間
+    public float dashDuration = 0.15f; // ダッシュの持続時間
     float lastDamageTime = -999;
     float lastAttackTime = 0f; // 最後に攻撃した時間
     public LayerMask enemyLayer; // 敵のレイヤーを指定するための変数
@@ -43,6 +46,8 @@ public class Player : MonoBehaviour
         //実際の移動量
         Vector2 movement = moveDirection * moveSpeed * Time.deltaTime;
 
+        if (isDashing) return; // ダッシュ中は通常の移動を無効化
+
         //位置を更新
         transform.position += new Vector3(movement.x, movement.y, 0);
 
@@ -58,9 +63,9 @@ public class Player : MonoBehaviour
 
         AutoAttack();
 
-        if(Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
-            if(nearskillOrb != null)
+            if (nearskillOrb != null)
             {
                 skillData = nearskillOrb.GetSkillOrb();
             }
@@ -73,14 +78,14 @@ public class Player : MonoBehaviour
         float attackRadius = playerRadius * attackRangeMultiplier;
 
         //attackRadiusの範囲内にいる敵を取得
-        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(transform.position, attackRadius,enemyLayer);
+        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(transform.position, attackRadius, enemyLayer);
 
         //取得した敵の数だけ、仮の確認ログを出す
         foreach (Collider2D enemy in hitEnemies)
         {
             Debug.Log("敵を攻撃しました: " + enemy.name);
             Enemy ediscovery = enemy.GetComponent<Enemy>();
-            if(ediscovery != null )
+            if (ediscovery != null)
             {
                 ediscovery.TakeDamage(1);
             }
@@ -88,19 +93,19 @@ public class Player : MonoBehaviour
         }
     }
 
-    
-     void AutoAttack()
-     {
-        if(Time.time - lastAttackTime >= attackCooldown)
-        {  
+
+    void AutoAttack()
+    {
+        if (Time.time - lastAttackTime >= attackCooldown)
+        {
             Attack();
             lastAttackTime = Time.time;
         }
-     }
-     
+    }
+
     void LevelUp()
     {
-        if(exp >= levelUpExp)
+        if (exp >= levelUpExp)
         {
             nowLevel++;
             exp -= levelUpExp;
@@ -145,20 +150,20 @@ public class Player : MonoBehaviour
             if (Time.time - lastDamageTime >= damageCooldown)
             {
                 TakeDamage(1);
-                lastDamageTime = Time.time; 
+                lastDamageTime = Time.time;
             }
         }
 
         ExpOrb expOrb = other.GetComponent<ExpOrb>();
-        if(expOrb != null)
+        if (expOrb != null)
         {
             exp += expOrb.PickupExp();
-            Debug.Log("現在の経験値："+ exp);
+            Debug.Log("現在の経験値：" + exp);
             LevelUp();
         }
 
         SkillOrb nearSkillOrb = other.GetComponent<SkillOrb>();
-        if(nearSkillOrb != null)
+        if (nearSkillOrb != null)
         {
             nearskillOrb = nearSkillOrb;
         }
@@ -168,7 +173,7 @@ public class Player : MonoBehaviour
     void OnTriggerExit2D(Collider2D other)
     {
         SkillOrb nearSkillOrb = other.GetComponent<SkillOrb>();
-        if(nearSkillOrb != null && nearSkillOrb == nearskillOrb)
+        if (nearSkillOrb != null && nearSkillOrb == nearskillOrb)
         {
             nearskillOrb = null;
         }
@@ -177,7 +182,7 @@ public class Player : MonoBehaviour
     // Player自身がダメージを受ける関数(Enemy.csのTakeDamageと同じ考え方)
     public void TakeDamage(int damage)
     {
-        if(invinCible)
+        if (invinCible)
         {
             return; // 無敵状態ならダメージを受けない
         }
@@ -187,7 +192,7 @@ public class Player : MonoBehaviour
 
         // TODO: hp が 0 以下になったかどうかを調べる
         if (hp <= 0)// TODO: 条件
-    {
+        {
             // 今はひとまずログを出すだけにしておく
             Debug.Log("ゲームオーバー");
             FindFirstObjectByType<SceneFader>().FadeToScene("Result");
@@ -216,7 +221,30 @@ public class Player : MonoBehaviour
 
     public void ActivateAvoidance()
     {
+        StartCoroutine(AvoidanceCoroutine());
         // 回避の効果を発動する処理をここに追加
         Debug.Log("回避の効果を発動しました！");
+    }
+
+    public IEnumerator AvoidanceCoroutine()
+    {
+        //入力を調べる
+        float inputX = Input.GetAxis("Horizontal");
+        float inputY = Input.GetAxis("Vertical");
+
+        //移動ベクトルを作る
+        Vector2 moveDirection = new Vector2(inputX, inputY);
+
+        isDashing = true; // ダッシュ状態にする
+
+        float elapsedTime = 0f;
+        while (elapsedTime < dashDuration)
+        {
+            elapsedTime += Time.deltaTime;
+            transform.position += new Vector3(moveDirection.x,moveDirection.y,0) * DashSpeed * Time.deltaTime;
+            yield return null; // 次のフレームまで待つ
+        }
+
+        isDashing = false; // ダッシュ状態を解除する
     }
 }

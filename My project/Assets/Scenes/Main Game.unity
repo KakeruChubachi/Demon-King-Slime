@@ -846,9 +846,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player
   moveSpeed: 5
+  DashSpeed: 10
+  isDashing: 0
   playerRadius: 1
   attackRangeMultiplier: 1.5
-  attackCooldown: 1
+  attackCooldown: 0.5
   hp: 10
   exp: 1
   nowLevel: 1
@@ -856,6 +858,7 @@ MonoBehaviour:
   uIController: {fileID: 1923017714}
   nearskillOrb: {fileID: 0}
   damageCooldown: 1
+  dashDuration: 0.5
   enemyLayer:
     serializedVersion: 2
     m_Bits: 0
