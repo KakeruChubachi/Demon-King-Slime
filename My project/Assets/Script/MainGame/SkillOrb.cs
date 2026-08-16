@@ -15,6 +15,7 @@ public class SkillOrb : MonoBehaviour
 
     public SkillData GetSkillOrb()
     {
+        Debug.Log("ÉIÅ[Éuè¡îÔ: " + gameObject.name);
         Destroy(gameObject);
         return skillData;
     }

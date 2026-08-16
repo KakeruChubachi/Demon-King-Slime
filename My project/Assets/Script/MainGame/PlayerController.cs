@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class Player : MonoBehaviour
 {
@@ -15,7 +16,7 @@ public class Player : MonoBehaviour
     public int nowLevel = 1;//現在のレベル
     public int levelUpExp = 10;//レベルアップに必要な経験値
     public UIController uIController;
-    public SkillOrb nearskillOrb;
+    public List<SkillOrb> nearSkillOrbs = new List<SkillOrb>();
     SkillData skillData;
 
     public float damageCooldown = 1.0f; // ダメージを受けた後の無敵時間
@@ -26,11 +27,19 @@ public class Player : MonoBehaviour
     public bool invinCible = false; // 無敵状態かどうかを示すフラグ
     public float invincibleDuration = 2.0f; // 無敵状態の持続時間
     public GameObject barrierVisual;
+    public SpriteRenderer spriteRenderer; // プレイヤーのスプライトレンダラーを参照するための変数
+    public float copyDuration = 5.0f; // コピーの持続時間
+
+    //元のステータスを保存する変数
+    int originalHp;
+    float originalMoveSpeed;
+    Sprite originalSprite;
 
     void Start()
     {
         uIController.SetSllimeLevel(nowLevel);
         uIController.SetLife(hp);
+        barrierVisual.SetActive(false); // バリア状態のビジュアルを非表示にする
     }
 
     // Update is called once per frame
@@ -62,14 +71,6 @@ public class Player : MonoBehaviour
         */
 
         AutoAttack();
-
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            if (nearskillOrb != null)
-            {
-                skillData = nearskillOrb.GetSkillOrb();
-            }
-        }
     }
 
     void Attack()
@@ -162,20 +163,23 @@ public class Player : MonoBehaviour
             LevelUp();
         }
 
+    }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
         SkillOrb nearSkillOrb = other.GetComponent<SkillOrb>();
         if (nearSkillOrb != null)
         {
-            nearskillOrb = nearSkillOrb;
+            nearSkillOrbs.Add(nearSkillOrb);
         }
-
     }
 
     void OnTriggerExit2D(Collider2D other)
     {
         SkillOrb nearSkillOrb = other.GetComponent<SkillOrb>();
-        if (nearSkillOrb != null && nearSkillOrb == nearskillOrb)
+        if (nearSkillOrb != null)
         {
-            nearskillOrb = null;
+            nearSkillOrbs.Remove(nearSkillOrb) ;
         }
     }
 
@@ -215,6 +219,17 @@ public class Player : MonoBehaviour
 
     public void ActivateCopy()
     {
+        if (nearSkillOrbs.Count > 0)
+        {
+            SkillOrb orbTouse = nearSkillOrbs[0];
+            skillData = orbTouse.GetSkillOrb();
+            nearSkillOrbs.Remove(orbTouse);
+        }
+        if (skillData == null)
+        {
+            return;
+        }
+        StartCoroutine(CopyCoroutine());
         // コピーの効果を発動する処理をここに追加
         Debug.Log("コピーの効果を発動しました！");
     }
@@ -246,5 +261,27 @@ public class Player : MonoBehaviour
         }
 
         isDashing = false; // ダッシュ状態を解除する
+    }
+
+    public IEnumerator CopyCoroutine()
+    {
+        //元のステータスを保存
+        originalHp = hp;
+        originalMoveSpeed = moveSpeed;
+        originalSprite = spriteRenderer.sprite;
+
+        // コピーされたスキルデータのステータスを適用
+        hp = skillData.copiedHp;
+        moveSpeed = skillData.copiedMoveSpeed;
+        spriteRenderer.sprite = skillData.copiedSprite;
+
+        yield return new WaitForSeconds(copyDuration); // コピーの効果が持続する時間
+
+        // 元のステータスに戻す
+        hp = originalHp;
+        moveSpeed = originalMoveSpeed;
+        spriteRenderer.sprite = originalSprite;
+
+        skillData = null; // コピーされたスキルデータをリセット
     }
 }

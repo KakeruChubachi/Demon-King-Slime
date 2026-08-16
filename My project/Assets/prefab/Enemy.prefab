@@ -151,11 +151,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a68e15464c880f42ad46093810ee03e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemy
-  hp: 10
+  hp: 1
   moveSpeed: 2
   target: {fileID: 0}
-  spawnOrb: {fileID: 0}
-  dropRate: 0.05
-  SkillOrbprefab: {fileID: 0}
-  skillDatas: []
+  spawnOrb: {fileID: 4293523638711481329, guid: 709616cbd870e824ba83ccdf6beee787, type: 3}
+  dropRate: 1
+  SkillOrbprefab: {fileID: 587957185058556469, guid: 743fc6f473c257141b2906b51e85208c, type: 3}
+  skillDatas:
+  - {fileID: 11400000, guid: fd2ec15d63dc00541a19905b3f657432, type: 2}
   movementEnabled: 1
+  spriteRenderer: {fileID: 4066817243604815779}
+  copiedskillData: {fileID: 0}

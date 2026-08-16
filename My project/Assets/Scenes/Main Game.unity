@@ -861,10 +861,12 @@ MonoBehaviour:
   dashDuration: 0.5
   enemyLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
   invinCible: 0
   invincibleDuration: 2
   barrierVisual: {fileID: 268527456}
+  spriteRenderer: {fileID: 710664055}
+  copyDuration: 2
 --- !u!58 &710664058
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -1366,6 +1368,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Text
+--- !u!212 &1440854030 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 4066817243604815779, guid: 7d0be9288bb4c654e9baf81d6046edd4, type: 3}
+  m_PrefabInstance: {fileID: 1618721282381601509}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1621683463
 GameObject:
   m_ObjectHideFlags: 0
@@ -2085,6 +2092,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 7123650024748204187, guid: 7d0be9288bb4c654e9baf81d6046edd4, type: 3}
+      propertyPath: hp
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7123650024748204187, guid: 7d0be9288bb4c654e9baf81d6046edd4, type: 3}
       propertyPath: target
       value: 
       objectReference: {fileID: 710664056}
@@ -2096,6 +2107,10 @@ PrefabInstance:
       propertyPath: SkillOrbprefab
       value: 
       objectReference: {fileID: 587957185058556469, guid: 743fc6f473c257141b2906b51e85208c, type: 3}
+    - target: {fileID: 7123650024748204187, guid: 7d0be9288bb4c654e9baf81d6046edd4, type: 3}
+      propertyPath: spriteRenderer
+      value: 
+      objectReference: {fileID: 1440854030}
     - target: {fileID: 8396677509717556914, guid: 7d0be9288bb4c654e9baf81d6046edd4, type: 3}
       propertyPath: m_LocalPosition.x
       value: 2.94
@@ -2340,6 +2355,10 @@ PrefabInstance:
     - target: {fileID: 8970255389906177760, guid: 28b4b4fc7f418304089d907bc667fe81, type: 3}
       propertyPath: m_Name
       value: EnemyBulletAttack
+      objectReference: {fileID: 0}
+    - target: {fileID: 8970255389906177760, guid: 28b4b4fc7f418304089d907bc667fe81, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

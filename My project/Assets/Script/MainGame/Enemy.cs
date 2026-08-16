@@ -10,6 +10,8 @@ public class Enemy : MonoBehaviour
     public GameObject SkillOrbprefab;
     public SkillData[] skillDatas; // スキルデータの配列
     public bool movementEnabled = true; // 移動を有効にするかどうかのフラグ
+    public SpriteRenderer spriteRenderer;
+    public SkillData copiedskillData; // コピーされたスキルデータを保持する変数
 
     private void Start()
     {
@@ -17,23 +19,28 @@ public class Enemy : MonoBehaviour
     }
     public void TakeDamage(int damage)
     {
+        int SaveHp = hp;// ダメージを受ける前のHPを保存
         hp -= damage;
         if (hp <= 0)
         {
+            Debug.Log("死亡処理開始");
             GameObject Orb = Instantiate(spawnOrb, transform.position, Quaternion.identity);
             ExpOrb expOrb = Orb.GetComponent<ExpOrb>();
             expOrb.target = target;
             if (Random.value < dropRate)
             {// ドロップ率に応じてアイテムをドロップするか判定
-
                 int skills = Random.Range(0, skillDatas.Length);
                 SkillData skillData = skillDatas[skills];
-                GameObject skillOrb = Instantiate(SkillOrbprefab, transform.position, Quaternion.identity);
-                SkillOrb skillOrbComponent = skillOrb.GetComponent<SkillOrb>();
-                skillOrbComponent.skillData = skillData;
-                skillOrbComponent.target = target;
+                copiedskillData = Instantiate(skillData);            // スキルデータをコピーして新しいインスタンスを作成
+                copiedskillData.copiedMoveSpeed = moveSpeed;         // コピーされたスキルデータにEnemyの移動速度を設定
+                copiedskillData.copiedSprite = spriteRenderer.sprite;// コピーされたスキルデータにEnemyのスプライトを設定
+                copiedskillData.copiedHp = SaveHp;                   // コピーされたスキルデータにEnemyのHPを設定
+                GameObject skillOrb = Instantiate(SkillOrbprefab, transform.position, Quaternion.identity);// スキルオーブを生成
+                SkillOrb skillOrbComponent = skillOrb.GetComponent<SkillOrb>();// スキルオーブのコンポーネントを取得
+                skillOrbComponent.skillData = copiedskillData;// スキルオーブにコピーされたスキルデータを設定
+                skillOrbComponent.target = target;// スキルオーブのターゲットを設定
             }
-           
+            Debug.Log("Destroy呼び出し");
             Destroy(gameObject);
         }
     }

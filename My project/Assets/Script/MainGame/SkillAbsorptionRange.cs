@@ -9,17 +9,19 @@ public class SkillAbsorptionRange : MonoBehaviour
         SkillOrb nearSkillOrb = other.GetComponent<SkillOrb>();
         if (nearSkillOrb != null)
         {
-            player.nearskillOrb = nearSkillOrb;
+            if (!player.nearSkillOrbs.Contains(nearSkillOrb))
+            {
+                player.nearSkillOrbs.Add(nearSkillOrb);
+            }
         }
-
     }
 
     void OnTriggerExit2D(Collider2D other)
     {
         SkillOrb nearSkillOrb = other.GetComponent<SkillOrb>();
-        if (nearSkillOrb != null && nearSkillOrb == player.nearskillOrb)
+        if (nearSkillOrb != null)
         {
-            player.nearskillOrb = null;
+            player.nearSkillOrbs.Remove(nearSkillOrb);
         }
     }
 }

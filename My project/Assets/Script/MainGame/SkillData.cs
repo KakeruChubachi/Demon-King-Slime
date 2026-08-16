@@ -4,4 +4,7 @@ using UnityEngine;
 public class SkillData : ScriptableObject
 {
     public string skillName;
+    public int copiedHp;
+    public float copiedMoveSpeed;
+    public Sprite copiedSprite;
 }
