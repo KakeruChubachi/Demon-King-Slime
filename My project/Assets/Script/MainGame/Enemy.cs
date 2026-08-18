@@ -12,8 +12,9 @@ public class Enemy : MonoBehaviour
     public bool movementEnabled = true; // 移動を有効にするかどうかのフラグ
     public SpriteRenderer spriteRenderer;
     public SkillData copiedskillData; // コピーされたスキルデータを保持する変数
+    public int ExpbaseValue = 10; // ドロップする経験値の基本値
 
-    private void Start()
+    protected virtual void Start()
     {
         target = GameObject.FindWithTag("Player").transform;
     }
@@ -27,6 +28,7 @@ public class Enemy : MonoBehaviour
             GameObject Orb = Instantiate(spawnOrb, transform.position, Quaternion.identity);
             ExpOrb expOrb = Orb.GetComponent<ExpOrb>();
             expOrb.target = target;
+            expOrb.SetExpAmount(ExpbaseValue); // ドロップする経験値の量を設定
             if (Random.value < dropRate)
             {// ドロップ率に応じてアイテムをドロップするか判定
                 int skills = Random.Range(0, skillDatas.Length);
@@ -45,7 +47,7 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    void Update()
+    protected virtual void Update()
     {
         if (!movementEnabled)
         {

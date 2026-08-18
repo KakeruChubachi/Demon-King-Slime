@@ -23,4 +23,9 @@ public class ExpOrb : MonoBehaviour
         Destroy(gameObject);
         return expAmount;
     }
+
+    public void SetExpAmount(int amount)
+    {
+        expAmount = amount;
+    }
 }

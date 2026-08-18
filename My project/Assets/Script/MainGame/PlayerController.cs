@@ -138,7 +138,16 @@ public class Player : MonoBehaviour
         // TODO: enemyがnullでない(=本当にEnemyだった)場合だけダメージ処理を行う
         if (enemy != null)// ヒント: enemy != null という条件
         {
-            if (Time.time - lastDamageTime >= damageCooldown)
+            Boss boss = other.GetComponent<Boss>();
+            if(boss != null)
+            {                
+                if (Time.time - lastDamageTime >= damageCooldown)
+                {
+                    TakeDamage(4); // ボスからのダメージ量を4に設定
+                    lastDamageTime = Time.time; // ダメージを受けた時間を更新
+                }
+            }
+            else if(Time.time - lastDamageTime >= damageCooldown)
             {
                 TakeDamage(1); // 仮のダメージ量
                 lastDamageTime = Time.time; // ダメージを受けた時間を更新

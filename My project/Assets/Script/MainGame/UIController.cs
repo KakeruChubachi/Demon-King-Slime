@@ -22,4 +22,12 @@ public class UIController : MonoBehaviour
     {
         lifeText.text = "ƒ‰ƒCƒt:" + life;
     }
+
+    public void SetTime(float time)
+    {
+        int min = (int)time / 60;
+        int sec = (int)time % 60;
+        timeText.text =  min.ToString("00") + ":" + sec.ToString("00");
+
+    }
 }
