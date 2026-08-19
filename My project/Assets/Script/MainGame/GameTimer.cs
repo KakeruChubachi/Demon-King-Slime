@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class GameTimer : MonoBehaviour
 {
+    public GameObject bossPrefab; //ボスのプレハブを設定
     public UIController uIController;
     public float timeLimit = 180f; //制限時間を設定（秒）
     public float BossApprearamceTime = 1.5f; //ボス出現時間を設定（秒）
@@ -38,6 +39,7 @@ public class GameTimer : MonoBehaviour
                     isBossAppeared = true;
                     //ボス出現処理
                     Debug.Log("ボス出現");
+                    Instantiate(bossPrefab, new Vector3(0, 5, 0), Quaternion.identity);
                 }
             }
         }
