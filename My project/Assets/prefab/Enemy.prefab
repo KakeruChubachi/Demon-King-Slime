@@ -152,7 +152,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemy
   hp: 1
-  moveSpeed: 2
+  moveSpeed: 3
   target: {fileID: 0}
   spawnOrb: {fileID: 4293523638711481329, guid: 709616cbd870e824ba83ccdf6beee787, type: 3}
   dropRate: 1
@@ -162,3 +162,4 @@ MonoBehaviour:
   movementEnabled: 1
   spriteRenderer: {fileID: 4066817243604815779}
   copiedskillData: {fileID: 0}
+  ExpbaseValue: 10

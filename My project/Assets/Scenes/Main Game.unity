@@ -2183,6 +2183,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 4293523638711481329, guid: 709616cbd870e824ba83ccdf6beee787, type: 3}
     - target: {fileID: 7123650024748204187, guid: 7d0be9288bb4c654e9baf81d6046edd4, type: 3}
+      propertyPath: moveSpeed
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7123650024748204187, guid: 7d0be9288bb4c654e9baf81d6046edd4, type: 3}
       propertyPath: SkillOrbprefab
       value: 
       objectReference: {fileID: 587957185058556469, guid: 743fc6f473c257141b2906b51e85208c, type: 3}

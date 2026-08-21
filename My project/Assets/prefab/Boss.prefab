@@ -152,7 +152,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Boss
   hp: 10
-  moveSpeed: 4
+  moveSpeed: 3
   target: {fileID: 0}
   spawnOrb: {fileID: 0}
   dropRate: 0.05
