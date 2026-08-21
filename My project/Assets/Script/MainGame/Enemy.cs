@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public class Enemy : MonoBehaviour
 {
@@ -13,6 +14,8 @@ public class Enemy : MonoBehaviour
     public SpriteRenderer spriteRenderer;
     public SkillData copiedskillData; // コピーされたスキルデータを保持する変数
     public int ExpbaseValue = 10; // ドロップする経験値の基本値
+    public bool isDead = false;
+    public int SaveHp;
 
     protected virtual void Start()
     {
@@ -20,35 +23,25 @@ public class Enemy : MonoBehaviour
     }
     public void TakeDamage(int damage)
     {
-        int SaveHp = hp;// ダメージを受ける前のHPを保存
+        if(isDead) return;
+        SaveHp = hp;// ダメージを受ける前のHPを保存
         hp -= damage;
         if (hp <= 0)
         {
             Debug.Log("死亡処理開始");
-            GameObject Orb = Instantiate(spawnOrb, transform.position, Quaternion.identity);
-            ExpOrb expOrb = Orb.GetComponent<ExpOrb>();
-            expOrb.target = target;
-            expOrb.SetExpAmount(ExpbaseValue); // ドロップする経験値の量を設定
-            if (Random.value < dropRate)
-            {// ドロップ率に応じてアイテムをドロップするか判定
-                int skills = Random.Range(0, skillDatas.Length);
-                SkillData skillData = skillDatas[skills];
-                copiedskillData = Instantiate(skillData);            // スキルデータをコピーして新しいインスタンスを作成
-                copiedskillData.copiedMoveSpeed = moveSpeed;         // コピーされたスキルデータにEnemyの移動速度を設定
-                copiedskillData.copiedSprite = spriteRenderer.sprite;// コピーされたスキルデータにEnemyのスプライトを設定
-                copiedskillData.copiedHp = SaveHp;                   // コピーされたスキルデータにEnemyのHPを設定
-                GameObject skillOrb = Instantiate(SkillOrbprefab, transform.position, Quaternion.identity);// スキルオーブを生成
-                SkillOrb skillOrbComponent = skillOrb.GetComponent<SkillOrb>();// スキルオーブのコンポーネントを取得
-                skillOrbComponent.skillData = copiedskillData;// スキルオーブにコピーされたスキルデータを設定
-                skillOrbComponent.target = target;// スキルオーブのターゲットを設定
-            }
-            Debug.Log("Destroy呼び出し");
-            Destroy(gameObject);
+            
+            
+            StartCoroutine(WaitCoroutine());
+            isDead = true;
         }
     }
 
     protected virtual void Update()
     {
+        if (isDead)
+        {
+            movementEnabled = false;
+        }
         if (!movementEnabled)
         {
             return;
@@ -65,5 +58,29 @@ public class Enemy : MonoBehaviour
         // ④ 位置を更新する
         // TODO: transform.position に movement を加算する
         transform.position += movement;
+    }
+
+    public IEnumerator WaitCoroutine()
+    {
+        spriteRenderer.color = Color.gray;
+        yield return new WaitForSeconds(1f);
+        GameObject Orb = Instantiate(spawnOrb, transform.position, Quaternion.identity);
+        ExpOrb expOrb = Orb.GetComponent<ExpOrb>();
+        expOrb.target = target;
+        expOrb.SetExpAmount(ExpbaseValue); // ドロップする経験値の量を設定
+        if (Random.value < dropRate)
+        {// ドロップ率に応じてアイテムをドロップするか判定
+            int skills = Random.Range(0, skillDatas.Length);
+            SkillData skillData = skillDatas[skills];
+            copiedskillData = Instantiate(skillData);            // スキルデータをコピーして新しいインスタンスを作成
+            copiedskillData.copiedMoveSpeed = moveSpeed;         // コピーされたスキルデータにEnemyの移動速度を設定
+            copiedskillData.copiedSprite = spriteRenderer.sprite;// コピーされたスキルデータにEnemyのスプライトを設定
+            copiedskillData.copiedHp = SaveHp;                   // コピーされたスキルデータにEnemyのHPを設定
+            GameObject skillOrb = Instantiate(SkillOrbprefab, transform.position, Quaternion.identity);// スキルオーブを生成
+            SkillOrb skillOrbComponent = skillOrb.GetComponent<SkillOrb>();// スキルオーブのコンポーネントを取得
+            skillOrbComponent.skillData = copiedskillData;// スキルオーブにコピーされたスキルデータを設定
+            skillOrbComponent.target = target;// スキルオーブのターゲットを設定
+        }
+            Destroy(gameObject);
     }
 }
