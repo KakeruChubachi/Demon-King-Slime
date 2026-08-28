@@ -29,7 +29,7 @@ public class SkillSlot : MonoBehaviour
         if(nowTime > 0)
         {
             nowTime -= Time.deltaTime;
-            SkillImage.color = Color.Lerp(Color.white, Color.gray, nowTime/CooldownTime);
+            SkillImage.color = Color.Lerp(Color.white, Color.black, nowTime/CooldownTime);
             if (nowTime < 0)
             {
                 nowTime = 0;
