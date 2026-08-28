@@ -16,6 +16,7 @@ public class Player : MonoBehaviour
     public int nowLevel = 1;//現在のレベル
     public int levelUpExp = 10;//レベルアップに必要な経験値
     public UIController uIController;
+    public StorenSkillslot storenSkillslot;
     public List<SkillOrb> nearSkillOrbs = new List<SkillOrb>();
     SkillData skillData;
 
@@ -179,7 +180,9 @@ public class Player : MonoBehaviour
         SkillOrb nearSkillOrb = other.GetComponent<SkillOrb>();
         if (nearSkillOrb != null)
         {
-            nearSkillOrbs.Add(nearSkillOrb);
+            skillData = nearSkillOrb.GetSkillOrb();
+            storenSkillslot.ReceiveSkills(skillData);
+            //nearSkillOrbs.Add(nearSkillOrb);
         }
     }
 
@@ -228,12 +231,7 @@ public class Player : MonoBehaviour
 
     public void ActivateCopy()
     {
-        if (nearSkillOrbs.Count > 0)
-        {
-            SkillOrb orbTouse = nearSkillOrbs[0];
-            skillData = orbTouse.GetSkillOrb();
-            nearSkillOrbs.Remove(orbTouse);
-        }
+        skillData = storenSkillslot.GetSelectedSkill();
         if (skillData == null)
         {
             return;
