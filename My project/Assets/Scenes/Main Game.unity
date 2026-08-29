@@ -979,7 +979,7 @@ MonoBehaviour:
   DashSpeed: 10
   isDashing: 0
   playerRadius: 1
-  attackRangeMultiplier: 1.5
+  attackRangeMultiplier: 2
   attackCooldown: 0.5
   hp: 10
   exp: 1
