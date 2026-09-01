@@ -31,6 +31,8 @@ public class Player : MonoBehaviour
     public SpriteRenderer spriteRenderer; // プレイヤーのスプライトレンダラーを参照するための変数
     public float copyDuration = 5.0f; // コピーの持続時間
 
+    float outsideDistance = 10f; // カメラの外側に出る距離
+
     //元のステータスを保存する変数
     int originalHp;
     float originalMoveSpeed;
@@ -61,15 +63,22 @@ public class Player : MonoBehaviour
         //位置を更新
         transform.position += new Vector3(movement.x, movement.y, 0);
 
-        /*if (Input.GetKeyDown(KeyCode.Space))
-        {
-            if(Time.time - lastAttackTime >= attackCooldown)
-            {
-                Attack();
-                lastAttackTime = Time.time; // 攻撃した時間を更新
-            }
-        }
-        */
+        Camera cam = Camera.main;
+
+        float height = cam.orthographicSize;
+        float width = height * cam.aspect;
+
+        Vector3 center = cam.transform.position;
+
+        float left = center.x - width - outsideDistance;
+        float right = center.x + width + outsideDistance;
+        float top = center.y + height + outsideDistance;
+        float bottom = center.y - height - outsideDistance;
+
+        Vector3 mapArea = transform.position;
+        mapArea.x = Mathf.Clamp(transform.position.x, left, right);
+        mapArea.y = Mathf.Clamp(transform.position.y, bottom, top);
+        transform.position = mapArea;
 
         AutoAttack();
     }
