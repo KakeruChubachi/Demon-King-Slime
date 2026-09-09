@@ -677,7 +677,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f9c469299191844189c3711bd9e3c02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameTimer
-  bossPrefab: {fileID: 8524543450048362721, guid: 1af6ad5d175a96947843ae6e45c37bc7, type: 3}
+  bossPrefab: {fileID: 230617469897217731, guid: c88fb6c9c1354f7479c5e62d1ed7de58, type: 3}
   uIController: {fileID: 1923017714}
   timeLimit: 1
   BossApprearamceTime: 1.5
@@ -2768,6 +2768,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2665252659021125515, guid: 28b4b4fc7f418304089d907bc667fe81, type: 3}
+      propertyPath: m_UsedByEffector
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4409322453525152732, guid: 28b4b4fc7f418304089d907bc667fe81, type: 3}
       propertyPath: Bullet
       value: 
