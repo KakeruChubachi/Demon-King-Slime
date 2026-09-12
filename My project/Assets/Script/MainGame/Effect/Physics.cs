@@ -1,11 +1,21 @@
 using UnityEngine;
 
+[CreateAssetMenu(fileName = "NewPhysicsEffect", menuName = "Skill/Effect/Physics")]
 public class Physics : Effect
 {
     public int physicsAmount = 5;
-    public override void ApplyEffect(Player player)
+    int appliedAmount;
+
+    public override void ApplyEffect(Player player, float multiplier)
     {
-        //player.physics += physicsAmount;
-        Debug.Log("•¨—UŒ‚—Í‚ª" + physicsAmount + "‘‰Á‚µ‚Ü‚µ‚½B");
+        appliedAmount = Mathf.RoundToInt(physicsAmount * multiplier);
+        player.physicalPower += appliedAmount;
+        Debug.Log("•¨—UŒ‚—Í‚ª" + appliedAmount + "‘‰Á‚µ‚Ü‚µ‚½B");
+    }
+
+    public override void RemoveEffect(Player player)
+    {
+        player.physicalPower -= appliedAmount;
+        Debug.Log("•¨—UŒ‚—Í‚Ì‘‰Á‚ªI—¹‚µ‚Ü‚µ‚½B");
     }
 }

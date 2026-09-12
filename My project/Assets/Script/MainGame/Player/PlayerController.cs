@@ -31,12 +31,31 @@ public class Player : MonoBehaviour
     public SpriteRenderer spriteRenderer; // プレイヤーのスプライトレンダラーを参照するための変数
     public float copyDuration = 5.0f; // コピーの持続時間
 
-    float outsideDistance = 10f; // カメラの外側に出る距離
+    // ── 固定マップ範囲 ──
+    public Vector2 mapMin = new Vector2(-20f, -20f);
+    public Vector2 mapMax = new Vector2(20f, 20f);
+
+    // ── 攻撃タイプ別ステータス ──
+    public int physicalPower = 3;  // 近接攻撃力
+    public int rangedPower = 2;    // 遠距離攻撃力
+    public int magicPower = 5;     // 魔法攻撃力
+
+    public GameObject rangedEffectPrefab; // 遠距離攻撃のエフェクトプレハブ
+    public GameObject magicEffectPrefab;  // 魔法攻撃のエフェクトプレハブ
+    public float rangedRange = 8f;        // 遠距離攻撃の射程
+    public float magicRange = 6f;         // 魔法攻撃の射程
+    public float rangedCooldown = 1.5f;   // 遠距離攻撃のクールダウン
+    public float magicCooldown = 3.0f;    // 魔法攻撃のクールダウン
+    float lastRangedTime = 0f;
+    float lastMagicTime = 0f;
 
     //元のステータスを保存する変数
     int originalHp;
     float originalMoveSpeed;
     Sprite originalSprite;
+
+    public bool canRangedAttack = false; // 遠距離攻撃が使えるかどうか
+    public bool canMagicAttack = false; // 魔法攻撃が使えるかどうか
 
     void Start()
     {
@@ -63,54 +82,107 @@ public class Player : MonoBehaviour
         //位置を更新
         transform.position += new Vector3(movement.x, movement.y, 0);
 
-        Camera cam = Camera.main;
-
-        float height = cam.orthographicSize;
-        float width = height * cam.aspect;
-
-        Vector3 center = cam.transform.position;
-
-        float left = center.x - width - outsideDistance;
-        float right = center.x + width + outsideDistance;
-        float top = center.y + height + outsideDistance;
-        float bottom = center.y - height - outsideDistance;
-
+        // 固定マップ範囲でClamp（カメラ位置に依存しない）
         Vector3 mapArea = transform.position;
-        mapArea.x = Mathf.Clamp(transform.position.x, left, right);
-        mapArea.y = Mathf.Clamp(transform.position.y, bottom, top);
+        mapArea.x = Mathf.Clamp(transform.position.x, mapMin.x, mapMax.x);
+        mapArea.y = Mathf.Clamp(transform.position.y, mapMin.y, mapMax.y);
         transform.position = mapArea;
 
         AutoAttack();
     }
 
-    void Attack()
+    // ── 近接攻撃 ──
+    void PhysicalAttack()
     {
-        //攻撃範囲
         float attackRadius = playerRadius * attackRangeMultiplier;
-
-        //attackRadiusの範囲内にいる敵を取得
         Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(transform.position, attackRadius, enemyLayer);
 
-        //取得した敵の数だけ、仮の確認ログを出す
         foreach (Collider2D enemy in hitEnemies)
         {
-            Debug.Log("敵を攻撃しました: " + enemy.name);
-            Enemy ediscovery = enemy.GetComponent<Enemy>();
-            if (ediscovery != null)
+            Debug.Log("物理攻撃がヒット: " + enemy.name);
+            Enemy e = enemy.GetComponent<Enemy>();
+            if (e != null)
             {
-                ediscovery.TakeDamage(1);
+                e.TakeDamage(physicalPower);
             }
-
         }
     }
 
+    // ── 遠距離攻撃 ──
+    void RangedAttack()
+    {
+        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(transform.position, rangedRange, enemyLayer);
+        if (hitEnemies.Length == 0) return;
+
+        // 一番近い敵を1体だけ狙う
+        Collider2D nearest = null;
+        float nearestDist = Mathf.Infinity;
+        foreach (Collider2D enemy in hitEnemies)
+        {
+            float dist = Vector2.Distance(transform.position, enemy.transform.position);
+            if (dist < nearestDist)
+            {
+                nearestDist = dist;
+                nearest = enemy;
+            }
+        }
+
+        if (nearest == null) return;
+
+        Debug.Log("遠距離攻撃がヒット: " + nearest.name);
+
+        if (rangedEffectPrefab != null)
+        {
+            Instantiate(rangedEffectPrefab, nearest.transform.position, Quaternion.identity);
+        }
+
+        Enemy e = nearest.GetComponent<Enemy>();
+        if (e != null)
+        {
+            e.TakeDamage(rangedPower);
+        }
+    }
+
+    // ── 魔法攻撃（範囲攻撃） ──
+    void MagicAttack()
+    {
+        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(transform.position, magicRange, enemyLayer);
+        if (hitEnemies.Length == 0) return;
+
+        if (magicEffectPrefab != null)
+        {
+            Instantiate(magicEffectPrefab, transform.position, Quaternion.identity);
+        }
+
+        foreach (Collider2D enemy in hitEnemies)
+        {
+            Debug.Log("魔法攻撃がヒット: " + enemy.name);
+            Enemy e = enemy.GetComponent<Enemy>();
+            if (e != null)
+            {
+                e.TakeDamage(magicPower);
+            }
+        }
+    }
 
     void AutoAttack()
     {
         if (Time.time - lastAttackTime >= attackCooldown)
         {
-            Attack();
+            PhysicalAttack();
             lastAttackTime = Time.time;
+        }
+
+        if (canRangedAttack && Time.time - lastRangedTime >= rangedCooldown)
+        {
+            RangedAttack();
+            lastRangedTime = Time.time;
+        }
+
+        if (canMagicAttack && Time.time - lastMagicTime >= magicCooldown)
+        {
+            MagicAttack();
+            lastMagicTime = Time.time;
         }
     }
 
@@ -120,7 +192,7 @@ public class Player : MonoBehaviour
         {
             nowLevel++;
             exp -= levelUpExp;
-            levelUpExp += 10; // 次のレベルアップに必要な経験値を増やす
+            levelUpExp += 5; // 次のレベルアップに必要な経験値を増やす
             uIController.SetSllimeLevel(nowLevel);
             Debug.Log("レベルアップ！現在のレベル：" + nowLevel);
         }
@@ -128,11 +200,18 @@ public class Player : MonoBehaviour
 
     void OnDrawGizmos()
     {
+        // 近接範囲
         Gizmos.color = Color.red;
-
         float attackRadius = playerRadius * attackRangeMultiplier;
-
         Gizmos.DrawWireSphere(transform.position, attackRadius);
+
+        // 遠距離範囲
+        Gizmos.color = Color.cyan;
+        Gizmos.DrawWireSphere(transform.position, rangedRange);
+
+        // 魔法範囲
+        Gizmos.color = Color.magenta;
+        Gizmos.DrawWireSphere(transform.position, magicRange);
     }
 
     // 敵(トリガー)に触れた瞬間、自動で呼ばれる関数
@@ -142,22 +221,20 @@ public class Player : MonoBehaviour
         {
             return;
         }
-        // TODO: other から Enemy スクリプトを取り出す(GetComponentを使う)
-        Enemy enemy = other.GetComponent<Enemy>();// ヒント: other.GetComponent<Enemy>()
+        Enemy enemy = other.GetComponent<Enemy>();
 
-        // TODO: enemyがnullでない(=本当にEnemyだった)場合だけダメージ処理を行う
-        if (enemy != null)// ヒント: enemy != null という条件
+        if (enemy != null)
         {
             Boss boss = other.GetComponent<Boss>();
-            if(boss != null)
-            {                
+            if (boss != null)
+            {
                 if (Time.time - lastDamageTime >= damageCooldown)
                 {
                     TakeDamage(4); // ボスからのダメージ量を4に設定
                     lastDamageTime = Time.time; // ダメージを受けた時間を更新
                 }
             }
-            else if(Time.time - lastDamageTime >= damageCooldown)
+            else if (Time.time - lastDamageTime >= damageCooldown)
             {
                 TakeDamage(1); // 仮のダメージ量
                 lastDamageTime = Time.time; // ダメージを受けた時間を更新
@@ -181,7 +258,6 @@ public class Player : MonoBehaviour
             Debug.Log("現在の経験値：" + exp);
             LevelUp();
         }
-
     }
 
     void OnTriggerEnter2D(Collider2D other)
@@ -200,7 +276,7 @@ public class Player : MonoBehaviour
         SkillOrb nearSkillOrb = other.GetComponent<SkillOrb>();
         if (nearSkillOrb != null)
         {
-            nearSkillOrbs.Remove(nearSkillOrb) ;
+            nearSkillOrbs.Remove(nearSkillOrb);
         }
     }
 
@@ -211,14 +287,11 @@ public class Player : MonoBehaviour
         {
             return; // 無敵状態ならダメージを受けない
         }
-        // TODO: hp から damage を引く
         hp -= damage;
         uIController.SetLife(hp);
 
-        // TODO: hp が 0 以下になったかどうかを調べる
-        if (hp <= 0)// TODO: 条件
+        if (hp <= 0)
         {
-            // 今はひとまずログを出すだけにしておく
             Debug.Log("ゲームオーバー");
             FindFirstObjectByType<SceneFader>().FadeToScene("Result");
         }
@@ -245,25 +318,26 @@ public class Player : MonoBehaviour
         {
             return;
         }
-        StartCoroutine(CopyCoroutine());
-        // コピーの効果を発動する処理をここに追加
-        Debug.Log("コピーの効果を発動しました！");
+
+        int duplicateCount = storenSkillslot.CountDuplicates(skillData);
+        float multiplier = duplicateCount > 1 ? 1.5f : 1f;
+
+        StartCoroutine(CopyCoroutine(multiplier));
+        ApplySkillEffects(skillData, multiplier);
+        Debug.Log("コピーの効果を発動しました！（倍率: " + multiplier + "）");
     }
 
     public void ActivateAvoidance()
     {
         StartCoroutine(AvoidanceCoroutine());
-        // 回避の効果を発動する処理をここに追加
         Debug.Log("回避の効果を発動しました！");
     }
 
     public IEnumerator AvoidanceCoroutine()
     {
-        //入力を調べる
         float inputX = Input.GetAxis("Horizontal");
         float inputY = Input.GetAxis("Vertical");
 
-        //移動ベクトルを作る
         Vector2 moveDirection = new Vector2(inputX, inputY);
 
         isDashing = true; // ダッシュ状態にする
@@ -272,32 +346,47 @@ public class Player : MonoBehaviour
         while (elapsedTime < dashDuration)
         {
             elapsedTime += Time.deltaTime;
-            transform.position += new Vector3(moveDirection.x,moveDirection.y,0) * DashSpeed * Time.deltaTime;
+            transform.position += new Vector3(moveDirection.x, moveDirection.y, 0) * DashSpeed * Time.deltaTime;
             yield return null; // 次のフレームまで待つ
         }
 
         isDashing = false; // ダッシュ状態を解除する
     }
 
-    public IEnumerator CopyCoroutine()
+    public IEnumerator CopyCoroutine(float multiplier)
     {
-        //元のステータスを保存
         originalHp = hp;
         originalMoveSpeed = moveSpeed;
         originalSprite = spriteRenderer.sprite;
 
-        // コピーされたスキルデータのステータスを適用
         hp = skillData.copiedHp;
         moveSpeed = skillData.copiedMoveSpeed;
         spriteRenderer.sprite = skillData.copiedSprite;
 
-        yield return new WaitForSeconds(copyDuration); // コピーの効果が持続する時間
+        yield return new WaitForSeconds(copyDuration);
 
-        // 元のステータスに戻す
         hp = originalHp;
         moveSpeed = originalMoveSpeed;
         spriteRenderer.sprite = originalSprite;
 
-        skillData = null; // コピーされたスキルデータをリセット
+        RemoveSkillEffects(skillData); // Copy終了と同時に効果も解除
+
+        skillData = null;
+    }
+
+    public void ApplySkillEffects(SkillData skill, float multiplier)
+    {
+        foreach (Effect effect in skill.effects)
+        {
+            effect.ApplyEffect(this, multiplier);
+        }
+    }
+
+    public void RemoveSkillEffects(SkillData skill)
+    {
+        foreach (Effect effect in skill.effects)
+        {
+            effect.RemoveEffect(this);
+        }
     }
 }

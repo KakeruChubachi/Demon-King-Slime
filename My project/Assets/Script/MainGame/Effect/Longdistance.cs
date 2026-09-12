@@ -1,11 +1,23 @@
 using UnityEngine;
 
-public class Longdistance　: Effect
+[CreateAssetMenu(fileName = "NewLongdistanceEffect", menuName = "Skill/Effect/Longdistance")]
+public class Longdistance : Effect
 {
     public int longdistanceAmount = 5;
-    public override void ApplyEffect(Player player)
+    int appliedAmount;
+
+    public override void ApplyEffect(Player player, float multiplier)
     {
-        //player.longdistance += longdistanceAmount;
-        Debug.Log("遠距離攻撃力が" + longdistanceAmount + "増加しました。");
+        appliedAmount = Mathf.RoundToInt(longdistanceAmount * multiplier);
+        player.rangedPower += appliedAmount;
+        player.canRangedAttack = true; // 追加：遠距離攻撃を解禁
+        Debug.Log("遠距離攻撃力が" + appliedAmount + "増加しました。");
+    }
+
+    public override void RemoveEffect(Player player)
+    {
+        player.rangedPower -= appliedAmount;
+        player.canRangedAttack = false; // 追加：効果終了と同時に禁止に戻す
+        Debug.Log("遠距離攻撃力の増加が終了しました。");
     }
 }

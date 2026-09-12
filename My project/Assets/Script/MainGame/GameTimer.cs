@@ -2,44 +2,71 @@ using UnityEngine;
 
 public class GameTimer : MonoBehaviour
 {
-    public GameObject bossPrefab; //ボスのプレハブを設定
+    public GameObject[] bossPrefabs = new GameObject[3]; // ボスを3体設定（Boss, Boss2, Boss3）
     public UIController uIController;
-    public float timeLimit = 180f; //制限時間を設定（秒）
-    public float BossApprearamceTime = 1.5f; //ボス出現時間を設定（秒）
-    public bool isBossAppeared = false; //ボスが出現したかどうかのフラグ
-    public bool isTimeUp = false; //時間切れかどうかのフラグ
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    public float[] phaseTimeLimits = { 60f, 60f, 60f }; // 各フェーズの制限時間
+    public float bossAppearanceDelay = 1.5f; // ボス出現までの予告時間
+
+    public int currentPhase = 0; // 現在のフェーズ（0, 1, 2）
+    public bool isBossAppeared = false;
+    public bool isTimeUp = false;
+
+    float timeLimit;
+    float bossApprearanceTime;
+    GameObject currentBossInstance;
+
     void Start()
     {
-        
+        timeLimit = phaseTimeLimits[currentPhase];
+        bossApprearanceTime = bossAppearanceDelay;
     }
 
-    // Update is called once per frame
     void Update()
     {
-        timeLimit -= Time.deltaTime;
-        if (timeLimit < 0)
-        {
-            timeLimit = 0;
-            isTimeUp = true;
-        }
-        uIController.SetTime(timeLimit);
+        // 全フェーズクリア済みなら何もしない
+        if (currentPhase >= bossPrefabs.Length) return;
 
-        if(timeLimit <= 0)
+        if (!isBossAppeared)
         {
-            BossApprearamceTime -= Time.deltaTime;
-            if(BossApprearamceTime < 0)
+            timeLimit -= Time.deltaTime;
+            if (timeLimit < 0)
             {
-                BossApprearamceTime = 0;
+                timeLimit = 0;
+                isTimeUp = true;
             }
-            if(BossApprearamceTime <= 0)
+            uIController.SetTime(timeLimit);
+
+            if (isTimeUp)
             {
-                if (!isBossAppeared)
+                bossApprearanceTime -= Time.deltaTime;
+                if (bossApprearanceTime <= 0)
                 {
                     isBossAppeared = true;
-                    //ボス出現処理
-                    Debug.Log("ボス出現");
-                    Instantiate(bossPrefab, new Vector3(0, 5, 0), Quaternion.identity);
+                    Debug.Log((currentPhase + 1) + "体目のボス出現");
+                    currentBossInstance = Instantiate(bossPrefabs[currentPhase], new Vector3(0, 5, 0), Quaternion.identity);
+                }
+            }
+        }
+        else
+        {
+            // ボスが倒されて破棄されたら次のフェーズへ
+            if (currentBossInstance == null)
+            {
+                currentPhase++;
+                Debug.Log((currentPhase) + "フェーズ目クリア");
+
+                if (currentPhase < bossPrefabs.Length)
+                {
+                    // 次のフェーズの準備
+                    isBossAppeared = false;
+                    isTimeUp = false;
+                    timeLimit = phaseTimeLimits[currentPhase];
+                    bossApprearanceTime = bossAppearanceDelay;
+                }
+                else
+                {
+                    Debug.Log("全ボスを撃破しました！ゲームクリア");
+                    // TODO: クリア画面への遷移などをここに追加
                 }
             }
         }

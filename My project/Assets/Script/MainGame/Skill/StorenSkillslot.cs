@@ -66,4 +66,17 @@ public class StorenSkillslot : MonoBehaviour
     {
         return skillSlots[selectedIndex];
     }
+
+    public int CountDuplicates(SkillData skill)
+    {
+        int count = 0;
+        foreach (SkillData s in skillSlots)
+        {
+            if (s == skill)
+            {
+                count++;
+            }
+        }
+        return count;
+    }
 }

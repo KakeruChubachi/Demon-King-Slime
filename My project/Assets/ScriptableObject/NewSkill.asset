@@ -13,3 +13,8 @@ MonoBehaviour:
   m_Name: NewSkill
   m_EditorClassIdentifier: Assembly-CSharp::SkillData
   skillName: skill
+  copiedHp: 0
+  copiedMoveSpeed: 0
+  copiedSprite: {fileID: 0}
+  effects:
+  - {fileID: 11400000, guid: f3a638c3c2aa64a4582914bbfcf64f5f, type: 2}

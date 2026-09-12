@@ -7,4 +7,6 @@ public class SkillData : ScriptableObject
     public int copiedHp;
     public float copiedMoveSpeed;
     public Sprite copiedSprite;
+
+    public Effect[] effects; // ’Ç‰ÁF‚±‚ÌƒXƒLƒ‹‚ª‚ÂŒø‰Êˆê——
 }
