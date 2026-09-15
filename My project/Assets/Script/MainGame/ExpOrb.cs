@@ -12,10 +12,10 @@ public class ExpOrb : MonoBehaviour
         {
             return;
         }
-        Vector3 direction = target.position - transform.position;
-        direction = direction.normalized;
-        Vector3 movement = direction * drawnspeed * Time.deltaTime;
-        transform.position += movement;
+        //Vector3 direction = target.position - transform.position;
+        //direction = direction.normalized;
+        //Vector3 movement = direction * drawnspeed * Time.deltaTime;
+        //transform.position += movement;
     }
 
     public int PickupExp()

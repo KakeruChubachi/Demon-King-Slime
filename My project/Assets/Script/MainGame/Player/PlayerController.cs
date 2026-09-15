@@ -62,6 +62,7 @@ public class Player : MonoBehaviour
         uIController.SetSllimeLevel(nowLevel);
         uIController.SetLife(hp);
         barrierVisual.SetActive(false); // バリア状態のビジュアルを非表示にする
+        uIController.SetExp(exp, levelUpExp);
     }
 
     // Update is called once per frame
@@ -193,6 +194,7 @@ public class Player : MonoBehaviour
             nowLevel++;
             exp -= levelUpExp;
             levelUpExp += 5; // 次のレベルアップに必要な経験値を増やす
+            uIController.SetExp(exp, levelUpExp);
             uIController.SetSllimeLevel(nowLevel);
             Debug.Log("レベルアップ！現在のレベル：" + nowLevel);
         }
@@ -255,6 +257,7 @@ public class Player : MonoBehaviour
         if (expOrb != null)
         {
             exp += expOrb.PickupExp();
+            uIController.SetExp(exp, levelUpExp);
             Debug.Log("現在の経験値：" + exp);
             LevelUp();
         }

@@ -19,6 +19,7 @@ public class GameTimer : MonoBehaviour
     {
         timeLimit = phaseTimeLimits[currentPhase];
         bossApprearanceTime = bossAppearanceDelay;
+        uIController.SetTime(timeLimit, phaseTimeLimits[currentPhase]);
     }
 
     void Update()
@@ -34,7 +35,7 @@ public class GameTimer : MonoBehaviour
                 timeLimit = 0;
                 isTimeUp = true;
             }
-            uIController.SetTime(timeLimit);
+            uIController.SetTime(timeLimit, phaseTimeLimits[currentPhase]);
 
             if (isTimeUp)
             {
@@ -62,6 +63,7 @@ public class GameTimer : MonoBehaviour
                     isTimeUp = false;
                     timeLimit = phaseTimeLimits[currentPhase];
                     bossApprearanceTime = bossAppearanceDelay;
+                    uIController.SetTime(timeLimit, phaseTimeLimits[currentPhase]);
                 }
                 else
                 {
