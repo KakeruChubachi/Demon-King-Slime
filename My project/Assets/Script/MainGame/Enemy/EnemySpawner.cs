@@ -4,6 +4,8 @@ public class EnemySpawner : MonoBehaviour
 {
     public GameObject enemyPrefab;//ê∂ê¨ÇµÇΩÇ¢ìG
     public GameObject bulletenemyPrefab;
+    public GameObject speedenemyPrefab;
+    public GameObject amountenemyPrefab;
     public float spawnInterval = 2f;//âΩïbÇ≤Ç∆Ç…èoÇ∑Ç©
     public EnemySpawnenPosition spawnPosition;
     float nowTime = 0;//éûä‘åoâﬂÇÃãLò^
@@ -43,6 +45,9 @@ public class EnemySpawner : MonoBehaviour
             Vector3 pos = spawnPosition.GetSpawnPosition();
             Instantiate(enemyPrefab, pos, Quaternion.identity);
             Instantiate(bulletenemyPrefab, pos, Quaternion.identity);
+            Instantiate(speedenemyPrefab, pos, Quaternion.identity);
+            Instantiate(amountenemyPrefab, pos, Quaternion.identity);
+            Instantiate(amountenemyPrefab, pos + new Vector3(10f, 5f, 0f), Quaternion.identity);
             //          Instantiate(enemyPrefab, transform.position,Quaternion.identity );
             nowTime = 0;
         }
