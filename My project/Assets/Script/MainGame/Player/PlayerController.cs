@@ -238,7 +238,7 @@ public class Player : MonoBehaviour
             }
             else if (Time.time - lastDamageTime >= damageCooldown)
             {
-                TakeDamage(1); // 仮のダメージ量
+                TakeDamage(enemy.attackPower); // 仮のダメージ量
                 lastDamageTime = Time.time; // ダメージを受けた時間を更新
             }
         }

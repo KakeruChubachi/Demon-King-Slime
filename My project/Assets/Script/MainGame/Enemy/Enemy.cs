@@ -16,6 +16,7 @@ public class Enemy : MonoBehaviour
     public int ExpbaseValue = 10; // ドロップする経験値の基本値
     public bool isDead = false;
     public int SaveHp;
+    public int attackPower = 1; // 攻撃力の初期値
 
     protected virtual void Start()
     {
@@ -82,5 +83,13 @@ public class Enemy : MonoBehaviour
             skillOrbComponent.target = target;// スキルオーブのターゲットを設定
         }
             Destroy(gameObject);
+    }
+
+    public void SetData(EnemyData data)
+    {
+        hp = data.hp;
+        moveSpeed = data.MoveSpeed;
+        attackPower = data.attackPower;
+        GetComponent<SpriteRenderer>().sprite = data.sprite;
     }
 }

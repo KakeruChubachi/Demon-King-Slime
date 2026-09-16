@@ -1188,6 +1188,14 @@ MonoBehaviour:
   spawnPosition: {fileID: 2131612874}
   isSpawn: 1
   gameTimer: {fileID: 466690517}
+  phaseEnemyData:
+  - enemies:
+    - {fileID: 11400000, guid: ba04c36dbf814ca449d0862f89a55a88, type: 2}
+    - {fileID: 11400000, guid: b498da0c00c965e4b918d8e1875833dc, type: 2}
+  - enemies:
+    - {fileID: 0}
+    - {fileID: 0}
+  - enemies: []
 --- !u!4 &474520239
 Transform:
   m_ObjectHideFlags: 0

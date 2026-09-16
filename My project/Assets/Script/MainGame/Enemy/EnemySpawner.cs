@@ -11,6 +11,13 @@ public class EnemySpawner : MonoBehaviour
     //public float spawnTime = 10f;// ‰½•bŒã‚É¶¬‚ğ~‚ß‚é‚©
     //float spawnElapsedTime = 0f;// ¶¬‚ğŠJn‚µ‚Ä‚©‚ç‚ÌŒo‰ßŠÔ
     public GameTimer gameTimer;
+    public EnemyDataList[] phaseEnemyData;
+
+    [System.Serializable]
+    public class EnemyDataList
+    {
+        public EnemyData[] enemies;
+    }
 
     private void Update()
     {
