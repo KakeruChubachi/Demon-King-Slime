@@ -12,4 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9bf7b23fed81e1d4491913d017b260c8, type: 3}
   m_Name: NewPhysicsEffect
   m_EditorClassIdentifier: Assembly-CSharp::Physics
+  effectName: "\u7269\u7406\u653B\u6483\u30A2\u30C3\u30D7\uFF11"
+  description: "\u7269\u7406\u30C0\u30E1\u30FC\u30B8\u304C\uFF15\u306B\u306A\u308B"
   physicsAmount: 5

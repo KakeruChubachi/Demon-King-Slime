@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class StorenSkillslot : MonoBehaviour
 {
@@ -8,6 +9,10 @@ public class StorenSkillslot : MonoBehaviour
     public Image[] slotImages = new Image[4];
     public Color highlightColor = Color.yellow;
     public Color normalColor = Color.white;
+    public GameObject confirmPanel;
+    private SkillData pendingSkill;
+    public TextMeshProUGUI[] slotInfoTexts = new TextMeshProUGUI[4]; // 4スロット分の内容表示
+    public TextMeshProUGUI newInfoText; // 右側：拾ったスキルの内容
 
     void Start()
     {
@@ -25,7 +30,12 @@ public class StorenSkillslot : MonoBehaviour
                 return;
             }
         }
-        Debug.Log("スキルスロットがいっぱいです。");
+
+        // 満タンなら確認パネルを表示する
+        pendingSkill = skillData;
+        confirmPanel.SetActive(true);
+        Time.timeScale = 0f;
+        UpdateConfirmInfo();
     }
 
     public void Update()
@@ -49,9 +59,9 @@ public class StorenSkillslot : MonoBehaviour
 
     void UpdateSlotColor()
     {
-        for(int i = 0; i < slotImages.Length; i++)
+        for (int i = 0; i < slotImages.Length; i++)
         {
-            if(i == selectedIndex)
+            if (i == selectedIndex)
             {
                 slotImages[i].color = highlightColor;
             }
@@ -59,6 +69,11 @@ public class StorenSkillslot : MonoBehaviour
             {
                 slotImages[i].color = normalColor;
             }
+        }
+
+        if (confirmPanel.activeSelf)
+        {
+            UpdateConfirmInfo();
         }
     }
 
@@ -78,5 +93,54 @@ public class StorenSkillslot : MonoBehaviour
             }
         }
         return count;
+    }
+
+    public void ConfirmSwap()
+    {
+        Debug.Log(skillSlots[selectedIndex].skillName + " を " + pendingSkill.skillName + " に入れ替えました");
+        skillSlots[selectedIndex] = pendingSkill;
+        pendingSkill = null;
+        confirmPanel.SetActive(false);
+        Time.timeScale = 1f;
+    }
+
+    public void CancelSwap()
+    {
+        Debug.Log(pendingSkill.skillName + " の入手をキャンセルしました");
+        pendingSkill = null;
+        confirmPanel.SetActive(false);
+        Time.timeScale = 1f;
+    }
+
+    void UpdateConfirmInfo()
+    {
+        for (int i = 0; i < skillSlots.Length; i++)
+        {
+            string info = "";
+            if (skillSlots[i] != null)
+            {
+                foreach (Effect effect in skillSlots[i].effects)
+                {
+                    info += effect.effectName + "\n" + effect.description + "\n\n";
+                }
+            }
+            else
+            {
+                info = "（空き）";
+            }
+            slotInfoTexts[i].text = info;
+        }
+
+        string newInfo = "";
+        foreach (Effect effect in pendingSkill.effects)
+        {
+            newInfo += effect.effectName + "\n" + effect.description + "\n\n";
+        }
+        newInfoText.text = newInfo;
+
+        for (int i = 0; i < slotInfoTexts.Length; i++)
+        {
+            slotInfoTexts[i].color = (i == selectedIndex) ? highlightColor : normalColor;
+        }
     }
 }
