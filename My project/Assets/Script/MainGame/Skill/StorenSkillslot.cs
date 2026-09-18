@@ -13,6 +13,7 @@ public class StorenSkillslot : MonoBehaviour
     private SkillData pendingSkill;
     public TextMeshProUGUI[] slotInfoTexts = new TextMeshProUGUI[4]; // 4スロット分の内容表示
     public TextMeshProUGUI newInfoText; // 右側：拾ったスキルの内容
+    public Player player; // Inspectorで設定
 
     void Start()
     {
@@ -38,23 +39,21 @@ public class StorenSkillslot : MonoBehaviour
         UpdateConfirmInfo();
     }
 
-    public void Update()
+    void Update()
     {
-        if(Input.mouseScrollDelta.y != 0)
-        {
-            if (Input.mouseScrollDelta.y > 0)
-            {
-                selectedIndex += 1;
-                Debug.Log("+1");
-            }
-            else if (Input.mouseScrollDelta.y < 0)
-            {
-                selectedIndex -= 1;
-                Debug.Log("-1");
-            }
-            selectedIndex = (selectedIndex + 4) % 4;
-            UpdateSlotColor();
-        }
+        if (Input.GetKeyDown(KeyCode.Alpha7)) SelectAndUse(0);
+        else if (Input.GetKeyDown(KeyCode.Alpha8)) SelectAndUse(1);
+        else if (Input.GetKeyDown(KeyCode.Alpha9)) SelectAndUse(2);
+        else if (Input.GetKeyDown(KeyCode.Alpha0)) SelectAndUse(3);
+    }
+
+    void SelectAndUse(int index)
+    {
+        if (skillSlots[index] == null) return; // 空きスロットなら何もしない
+
+        selectedIndex = index;
+        UpdateSlotColor();
+        player.ActivateCopy();
     }
 
     void UpdateSlotColor()

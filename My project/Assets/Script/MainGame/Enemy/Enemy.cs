@@ -92,4 +92,21 @@ public class Enemy : MonoBehaviour
         attackPower = data.attackPower;
         GetComponent<SpriteRenderer>().sprite = data.sprite;
     }
+
+    public bool CanBeCopied => isDead; // グレー表示中(死亡演出中)かどうか
+
+    public SkillData GetCopySkillData()
+    {
+        SkillData copied = Instantiate(skillDatas[Random.Range(0, skillDatas.Length)]);
+        copied.copiedMoveSpeed = moveSpeed;
+        copied.copiedSprite = spriteRenderer.sprite;
+        copied.copiedHp = SaveHp;
+        return copied;
+    }
+
+    public void ConsumeForCopy()
+    {
+        StopAllCoroutines(); // WaitCoroutine内のOrb生成・Destroyをキャンセル
+        Destroy(gameObject);
+    }
 }

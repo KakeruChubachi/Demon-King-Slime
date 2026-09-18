@@ -4279,6 +4279,7 @@ MonoBehaviour:
   - {fileID: 1269970528}
   - {fileID: 1275980898}
   newInfoText: {fileID: 292028669}
+  player: {fileID: 710664057}
 --- !u!1001 &1731536651
 PrefabInstance:
   m_ObjectHideFlags: 0

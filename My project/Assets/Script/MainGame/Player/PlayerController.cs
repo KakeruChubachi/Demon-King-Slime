@@ -30,6 +30,7 @@ public class Player : MonoBehaviour
     public GameObject barrierVisual;
     public SpriteRenderer spriteRenderer; // プレイヤーのスプライトレンダラーを参照するための変数
     public float copyDuration = 5.0f; // コピーの持続時間
+    Enemy nearEnemy;
 
     // ── 固定マップ範囲 ──
     public Vector2 mapMin = new Vector2(-20f, -20f);
@@ -90,6 +91,10 @@ public class Player : MonoBehaviour
         transform.position = mapArea;
 
         AutoAttack();
+        if (nearEnemy != null && nearEnemy.CanBeCopied && Input.GetKeyDown(KeyCode.Space))
+        {
+            CopyFromEnemy(nearEnemy);
+        }
     }
 
     // ── 近接攻撃 ──
@@ -227,6 +232,7 @@ public class Player : MonoBehaviour
 
         if (enemy != null)
         {
+            nearEnemy = enemy; // ← 追加
             Boss boss = other.GetComponent<Boss>();
             if (boss != null)
             {
@@ -272,6 +278,8 @@ public class Player : MonoBehaviour
             storenSkillslot.ReceiveSkills(skillData);
             //nearSkillOrbs.Add(nearSkillOrb);
         }
+
+       
     }
 
     void OnTriggerExit2D(Collider2D other)
@@ -280,6 +288,12 @@ public class Player : MonoBehaviour
         if (nearSkillOrb != null)
         {
             nearSkillOrbs.Remove(nearSkillOrb);
+        }
+
+        Enemy exitEnemy = other.GetComponent<Enemy>();
+        if (exitEnemy != null && exitEnemy == nearEnemy)
+        {
+            nearEnemy = null;
         }
     }
 
@@ -328,6 +342,16 @@ public class Player : MonoBehaviour
         StartCoroutine(CopyCoroutine(multiplier));
         ApplySkillEffects(skillData, multiplier);
         Debug.Log("コピーの効果を発動しました！（倍率: " + multiplier + "）");
+    }
+
+    public void CopyFromEnemy(Enemy target)
+    {
+        skillData = target.GetCopySkillData();
+        target.ConsumeForCopy();
+        nearEnemy = null; // ← 追加
+
+        StartCoroutine(CopyCoroutine(1f));
+        ApplySkillEffects(skillData, 1f);
     }
 
     public void ActivateAvoidance()
