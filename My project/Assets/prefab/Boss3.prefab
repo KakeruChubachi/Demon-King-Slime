@@ -143,13 +143,17 @@ MonoBehaviour:
   spawnOrb: {fileID: 0}
   dropRate: 0.05
   SkillOrbprefab: {fileID: 0}
-  skillDatas: []
+  skillDatas:
+  - {fileID: 11400000, guid: 9039e2aceffe2f94bb6a23d691f78f2d, type: 2}
   movementEnabled: 1
   spriteRenderer: {fileID: 0}
   copiedskillData: {fileID: 0}
   ExpbaseValue: 10
   isDead: 0
   SaveHp: 0
+  attackPower: 1
+  weakness: 1
+  weaknessMultiplier: 2
   tackleSpeed: 8
   tackleDistance: 10
   dashWarning: {fileID: 4654696298047836370}

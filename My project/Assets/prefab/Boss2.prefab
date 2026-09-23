@@ -110,13 +110,17 @@ MonoBehaviour:
   spawnOrb: {fileID: 0}
   dropRate: 0.05
   SkillOrbprefab: {fileID: 0}
-  skillDatas: []
+  skillDatas:
+  - {fileID: 11400000, guid: ce06a50c79fba0a43bb9cab6cde81679, type: 2}
   movementEnabled: 1
   spriteRenderer: {fileID: 0}
   copiedskillData: {fileID: 0}
   ExpbaseValue: 10
   isDead: 0
   SaveHp: 0
+  attackPower: 1
+  weakness: 0
+  weaknessMultiplier: 2
   bulletPrefab: {fileID: 7511239864004692604, guid: 43964b60689bd5a4dbbea47b9ad3ed8c, type: 3}
   bulletSpeed: 5
   fireRate: 1

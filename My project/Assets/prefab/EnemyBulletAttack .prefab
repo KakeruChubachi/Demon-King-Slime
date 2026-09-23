@@ -110,7 +110,7 @@ MonoBehaviour:
   moveSpeed: 2
   target: {fileID: 0}
   spawnOrb: {fileID: 4293523638711481329, guid: 709616cbd870e824ba83ccdf6beee787, type: 3}
-  dropRate: 1
+  dropRate: 0.1
   SkillOrbprefab: {fileID: 587957185058556469, guid: 743fc6f473c257141b2906b51e85208c, type: 3}
   skillDatas:
   - {fileID: 11400000, guid: fd2ec15d63dc00541a19905b3f657432, type: 2}
@@ -120,6 +120,9 @@ MonoBehaviour:
   ExpbaseValue: 10
   isDead: 0
   SaveHp: 0
+  attackPower: 1
+  weakness: 0
+  weaknessMultiplier: 2
 --- !u!114 &4409322453525152732
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -135,6 +138,9 @@ MonoBehaviour:
   Bullet: {fileID: 7511239864004692604, guid: 43964b60689bd5a4dbbea47b9ad3ed8c, type: 3}
   target: {fileID: 0}
   attackCooldown: 10
+  keepDistance: 5
+  moveSpeed: 2
+  distanceTolerance: 0.5
 --- !u!61 &2665252659021125515
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -173,7 +179,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 7, y: 5.1}
+    oldSize: {x: 3.5, y: 2.55}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0

@@ -109,7 +109,7 @@ public class Player : MonoBehaviour
             Enemy e = enemy.GetComponent<Enemy>();
             if (e != null)
             {
-                e.TakeDamage(physicalPower);
+                e.TakeDamage(physicalPower, Enemy.AttackType.Physical);
             }
         }
     }
@@ -145,7 +145,7 @@ public class Player : MonoBehaviour
         Enemy e = nearest.GetComponent<Enemy>();
         if (e != null)
         {
-            e.TakeDamage(rangedPower);
+            e.TakeDamage(rangedPower, Enemy.AttackType.Ranged);
         }
     }
 
@@ -166,7 +166,7 @@ public class Player : MonoBehaviour
             Enemy e = enemy.GetComponent<Enemy>();
             if (e != null)
             {
-                e.TakeDamage(magicPower);
+                e.TakeDamage(magicPower, Enemy.AttackType.Magic);
             }
         }
     }

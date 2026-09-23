@@ -255,7 +255,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 8.42, y: 6.44}
+    oldSize: {x: 4.21, y: 3.22}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -279,15 +279,19 @@ MonoBehaviour:
   moveSpeed: 3
   target: {fileID: 0}
   spawnOrb: {fileID: 0}
-  dropRate: 0.05
+  dropRate: 1
   SkillOrbprefab: {fileID: 0}
-  skillDatas: []
+  skillDatas:
+  - {fileID: 11400000, guid: 562436b86be41564f9a0b3ef8b94a3bf, type: 2}
   movementEnabled: 1
   spriteRenderer: {fileID: 0}
   copiedskillData: {fileID: 0}
   ExpbaseValue: 10
   isDead: 0
   SaveHp: 0
+  attackPower: 4
+  weakness: 2
+  weaknessMultiplier: 2
   tackleSpeed: 8
   tackleDistance: 10
   dashWarning: {fileID: 5021324560979349244}

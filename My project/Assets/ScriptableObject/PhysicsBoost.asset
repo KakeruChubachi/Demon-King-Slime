@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3ab5615b31b1d104db735dc4be78b9fe, type: 3}
-  m_Name: NewSkill
+  m_Name: PhysicsBoost
   m_EditorClassIdentifier: Assembly-CSharp::SkillData
-  skillName: skill
+  skillName: 
   copiedHp: 0
   copiedMoveSpeed: 0
   copiedSprite: {fileID: 0}
   effects:
-  - {fileID: 11400000, guid: f3a638c3c2aa64a4582914bbfcf64f5f, type: 2}
+  - {fileID: 11400000, guid: cd754d8bf8288524f9df0b74542205c6, type: 2}

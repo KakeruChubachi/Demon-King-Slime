@@ -17,21 +17,27 @@ public class Enemy : MonoBehaviour
     public bool isDead = false;
     public int SaveHp;
     public int attackPower = 1; // 攻撃力の初期値
+    public enum AttackType { Physical, Ranged, Magic }
+    public AttackType weakness = AttackType.Physical; // Inspectorでボスごとに設定
+    public float weaknessMultiplier = 2f;
 
     protected virtual void Start()
     {
         target = GameObject.FindWithTag("Player").transform;
     }
-    public void TakeDamage(int damage)
+    public void TakeDamage(int damage, AttackType type = AttackType.Physical)
     {
-        if(isDead) return;
-        SaveHp = hp;// ダメージを受ける前のHPを保存
+        if (isDead) return;
+        if (type == weakness)
+        {
+            damage = Mathf.RoundToInt(damage * weaknessMultiplier);
+            Debug.Log("弱点attack！ ダメージ" + damage);
+        }
+        SaveHp = hp;
         hp -= damage;
         if (hp <= 0)
         {
             Debug.Log("死亡処理開始");
-            
-            
             StartCoroutine(WaitCoroutine());
             isDead = true;
         }
