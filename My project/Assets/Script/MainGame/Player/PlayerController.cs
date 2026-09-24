@@ -58,6 +58,11 @@ public class Player : MonoBehaviour
     public bool canRangedAttack = false; // 遠距離攻撃が使えるかどうか
     public bool canMagicAttack = false; // 魔法攻撃が使えるかどうか
 
+    public ParticleSystem levelUpParticle;
+    public float stretchAmount = 1.3f;
+    public float stretchDuration = 0.4f;
+    public float stretchHoldTime = 0.2f;
+
     void Start()
     {
         uIController.SetSllimeLevel(nowLevel);
@@ -198,9 +203,19 @@ public class Player : MonoBehaviour
         {
             nowLevel++;
             exp -= levelUpExp;
-            levelUpExp += 5; // 次のレベルアップに必要な経験値を増やす
+            levelUpExp += 5;
+
+            hp += 3;
+            physicalPower += 2;
+            rangedPower += 2;
+            magicPower += 2;
+
             uIController.SetExp(exp, levelUpExp);
             uIController.SetSllimeLevel(nowLevel);
+            uIController.SetLife(hp);
+
+            StartCoroutine(LevelUpEffectCoroutine()); // ← 追加
+
             Debug.Log("レベルアップ！現在のレベル：" + nowLevel);
         }
     }
@@ -415,5 +430,36 @@ public class Player : MonoBehaviour
         {
             effect.RemoveEffect(this);
         }
+    }
+
+    public IEnumerator LevelUpEffectCoroutine()
+    {
+        if (levelUpParticle != null)
+        {
+            levelUpParticle.Play();
+        }
+
+        Vector3 originalScale = transform.localScale;
+        Vector3 stretchedScale = new Vector3(originalScale.x, originalScale.y * stretchAmount, originalScale.z);
+
+        float elapsed = 0f;
+        while (elapsed < stretchDuration)
+        {
+            elapsed += Time.deltaTime;
+            transform.localScale = Vector3.Lerp(originalScale, stretchedScale, elapsed / stretchDuration);
+            yield return null;
+        }
+        transform.localScale = stretchedScale;
+
+        yield return new WaitForSeconds(stretchHoldTime); // ← 追加：伸びた状態を少しキープ
+
+        elapsed = 0f;
+        while (elapsed < stretchDuration)
+        {
+            elapsed += Time.deltaTime;
+            transform.localScale = Vector3.Lerp(stretchedScale, originalScale, elapsed / stretchDuration);
+            yield return null;
+        }
+        transform.localScale = originalScale;
     }
 }
