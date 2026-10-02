@@ -66,6 +66,7 @@ public class Boss3 : Enemy
     {
         while (true)
         {
+            if (isDead) yield break;
             //if (!isDashing)
             //{
             //    yield return null;

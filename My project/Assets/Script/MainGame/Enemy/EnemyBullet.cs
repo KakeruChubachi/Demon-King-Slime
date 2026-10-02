@@ -11,6 +11,11 @@ public class EnemyBullet : MonoBehaviour
         direction = (target.position - transform.position).normalized;//Player‚Ì•ûŒü
     }
 
+    void Start()
+    {
+        Destroy(gameObject, 8f);
+    }
+
     void Update()
     {
         transform.position += direction * speed * Time.deltaTime;
