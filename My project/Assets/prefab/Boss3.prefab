@@ -43,7 +43,8 @@ GameObject:
   - component: {fileID: 228144555463590187}
   - component: {fileID: 4046750982792683638}
   - component: {fileID: 5831554995707419376}
-  m_Layer: 0
+  - component: {fileID: 2351715105754891472}
+  m_Layer: 6
   m_Name: Boss3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -137,23 +138,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a2b2827bb40805478302aa394f31ba4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Boss3
-  hp: 10
+  hp: 70
   moveSpeed: 2
   target: {fileID: 0}
-  spawnOrb: {fileID: 0}
+  spawnOrb: {fileID: 4293523638711481329, guid: 709616cbd870e824ba83ccdf6beee787, type: 3}
   dropRate: 0.05
-  SkillOrbprefab: {fileID: 0}
+  SkillOrbprefab: {fileID: 587957185058556469, guid: 743fc6f473c257141b2906b51e85208c, type: 3}
   skillDatas:
   - {fileID: 11400000, guid: 9039e2aceffe2f94bb6a23d691f78f2d, type: 2}
   movementEnabled: 1
-  spriteRenderer: {fileID: 0}
+  spriteRenderer: {fileID: 4046750982792683638}
   copiedskillData: {fileID: 0}
-  ExpbaseValue: 10
+  ExpbaseValue: 120
   isDead: 0
   SaveHp: 0
-  attackPower: 1
+  attackPower: 70
   weakness: 1
   weaknessMultiplier: 2
+  isFinalBoss: 1
+  clearSceneName: ClearScene
   tackleSpeed: 8
   tackleDistance: 10
   dashWarning: {fileID: 4654696298047836370}
@@ -166,6 +169,52 @@ MonoBehaviour:
   bulletTypeChangeTime: 10
   player: {fileID: 0}
   isDashing: 0
+--- !u!61 &2351715105754891472
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5844296108050135143}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 4.115, y: 3.78}
+    newSize: {x: 1, y: 0.8828125}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 4.115, y: 3.78}
+  m_EdgeRadius: 0
 --- !u!1 &8254715245748378692
 GameObject:
   m_ObjectHideFlags: 0

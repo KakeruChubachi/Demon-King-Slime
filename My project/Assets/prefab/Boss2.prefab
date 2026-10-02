@@ -11,7 +11,8 @@ GameObject:
   - component: {fileID: 7938345227609046497}
   - component: {fileID: 9020113586845806572}
   - component: {fileID: 8852054839517104310}
-  m_Layer: 0
+  - component: {fileID: 7798586221418674521}
+  m_Layer: 6
   m_Name: Boss2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -104,23 +105,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5540e1fa86eede4dbb05319a68d3cb7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Boss2
-  hp: 10
+  hp: 45
   moveSpeed: 2
   target: {fileID: 0}
-  spawnOrb: {fileID: 0}
+  spawnOrb: {fileID: 4293523638711481329, guid: 709616cbd870e824ba83ccdf6beee787, type: 3}
   dropRate: 0.05
-  SkillOrbprefab: {fileID: 0}
+  SkillOrbprefab: {fileID: 587957185058556469, guid: 743fc6f473c257141b2906b51e85208c, type: 3}
   skillDatas:
   - {fileID: 11400000, guid: ce06a50c79fba0a43bb9cab6cde81679, type: 2}
   movementEnabled: 1
-  spriteRenderer: {fileID: 0}
+  spriteRenderer: {fileID: 9020113586845806572}
   copiedskillData: {fileID: 0}
-  ExpbaseValue: 10
+  ExpbaseValue: 60
   isDead: 0
   SaveHp: 0
-  attackPower: 1
+  attackPower: 7
   weakness: 0
   weaknessMultiplier: 2
+  isFinalBoss: 0
+  clearSceneName: ClearScene
   bulletPrefab: {fileID: 7511239864004692604, guid: 43964b60689bd5a4dbbea47b9ad3ed8c, type: 3}
   bulletSpeed: 5
   fireRate: 1
@@ -128,3 +131,49 @@ MonoBehaviour:
   bulletType: 0
   bulletTypeChangeTime: 10
   player: {fileID: 0}
+--- !u!61 &7798586221418674521
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 230617469897217731}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 4, y: 4.055}
+    newSize: {x: 1, y: 0.5}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 4, y: 4.055}
+  m_EdgeRadius: 0

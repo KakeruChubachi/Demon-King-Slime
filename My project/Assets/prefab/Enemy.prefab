@@ -155,7 +155,7 @@ MonoBehaviour:
   moveSpeed: 3
   target: {fileID: 0}
   spawnOrb: {fileID: 4293523638711481329, guid: 709616cbd870e824ba83ccdf6beee787, type: 3}
-  dropRate: 0.1
+  dropRate: 1
   SkillOrbprefab: {fileID: 587957185058556469, guid: 743fc6f473c257141b2906b51e85208c, type: 3}
   skillDatas:
   - {fileID: 11400000, guid: fd2ec15d63dc00541a19905b3f657432, type: 2}
@@ -168,3 +168,5 @@ MonoBehaviour:
   attackPower: 1
   weakness: 0
   weaknessMultiplier: 2
+  isFinalBoss: 0
+  clearSceneName: Result

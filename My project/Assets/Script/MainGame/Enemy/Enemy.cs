@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class Enemy : MonoBehaviour
 {
@@ -20,6 +21,8 @@ public class Enemy : MonoBehaviour
     public enum AttackType { Physical, Ranged, Magic }
     public AttackType weakness = AttackType.Physical; // Inspectorでボスごとに設定
     public float weaknessMultiplier = 2f;
+    public bool isFinalBoss = false;          // trueならDeath後にクリア画面へ
+    public string clearSceneName = "Result";
 
     protected virtual void Start()
     {
@@ -88,7 +91,12 @@ public class Enemy : MonoBehaviour
             skillOrbComponent.skillData = copiedskillData;// スキルオーブにコピーされたスキルデータを設定
             skillOrbComponent.target = target;// スキルオーブのターゲットを設定
         }
-            Destroy(gameObject);
+        if (isFinalBoss)
+        {
+            SceneManager.LoadScene(clearSceneName);
+            yield break;
+        }
+        Destroy(gameObject);
     }
 
     public void SetData(EnemyData data)

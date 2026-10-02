@@ -4,7 +4,7 @@ public class GameTimer : MonoBehaviour
 {
     public GameObject[] bossPrefabs = new GameObject[3]; // ボスを3体設定（Boss, Boss2, Boss3）
     public UIController uIController;
-    public float[] phaseTimeLimits = { 60f, 60f, 60f }; // 各フェーズの制限時間
+    public float[] phaseTimeLimits = { 10f, 10f, 10f }; // 各フェーズの制限時間
     public float bossAppearanceDelay = 1.5f; // ボス出現までの予告時間
 
     public int currentPhase = 0; // 現在のフェーズ（0, 1, 2）
