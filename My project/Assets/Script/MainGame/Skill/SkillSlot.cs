@@ -39,6 +39,7 @@ public class SkillSlot : MonoBehaviour
         {
             if(Input.GetKeyDown(SkillKey))
             {
+                Debug.Log($"ƒXƒƒbƒg“ü—Í: type={skillType}, player={player}");
                 nowTime = CooldownTime;
                 switch(skillType)
                 {

@@ -50,7 +50,7 @@ public class Player : MonoBehaviour
     float lastRangedTime = 0f;
     float lastMagicTime = 0f;
 
-    //元のステータスを保存する変数
+    //元のステータスを保存する変数(Spaceコピーの変身用)
     int originalHp;
     float originalMoveSpeed;
     Sprite originalSprite;
@@ -214,7 +214,7 @@ public class Player : MonoBehaviour
             uIController.SetSllimeLevel(nowLevel);
             uIController.SetLife(hp);
 
-            StartCoroutine(LevelUpEffectCoroutine()); // ← 追加
+            StartCoroutine(LevelUpEffectCoroutine());
 
             Debug.Log("レベルアップ！現在のレベル：" + nowLevel);
         }
@@ -247,7 +247,7 @@ public class Player : MonoBehaviour
 
         if (enemy != null)
         {
-            nearEnemy = enemy; // ← 追加
+            nearEnemy = enemy;
             Boss boss = other.GetComponent<Boss>();
             if (boss != null)
             {
@@ -293,8 +293,6 @@ public class Player : MonoBehaviour
             storenSkillslot.ReceiveSkills(skillData);
             //nearSkillOrbs.Add(nearSkillOrb);
         }
-
-       
     }
 
     void OnTriggerExit2D(Collider2D other)
@@ -343,6 +341,7 @@ public class Player : MonoBehaviour
         StartCoroutine(InvincibleCoroutine());
     }
 
+    // スロット発動: 見た目・ステータスは変えず、効果(攻撃方法など)だけ付与する
     public void ActivateCopy()
     {
         skillData = storenSkillslot.GetSelectedSkill();
@@ -351,19 +350,21 @@ public class Player : MonoBehaviour
             return;
         }
 
-        int duplicateCount = storenSkillslot.CountDuplicates(skillData);
+        int duplicateCount = storenSkillslot.CountDuplicates(skillData); // 倍率は消す前に計算
         float multiplier = duplicateCount > 1 ? 1.5f : 1f;
 
-        StartCoroutine(CopyCoroutine(multiplier));
+        StartCoroutine(EffectOnlyCoroutine(skillData));
         ApplySkillEffects(skillData, multiplier);
+        storenSkillslot.ConsumeSelectedSkill(); // 使ったスロットを空にする
         Debug.Log("コピーの効果を発動しました！（倍率: " + multiplier + "）");
     }
 
+    // Spaceコピー: 見た目・HP・移動速度も敵のものに変わる
     public void CopyFromEnemy(Enemy target)
     {
         skillData = target.GetCopySkillData();
         target.ConsumeForCopy();
-        nearEnemy = null; // ← 追加
+        nearEnemy = null;
 
         StartCoroutine(CopyCoroutine(1f));
         ApplySkillEffects(skillData, 1f);
@@ -395,6 +396,7 @@ public class Player : MonoBehaviour
         isDashing = false; // ダッシュ状態を解除する
     }
 
+    // Spaceコピー用: 変身あり
     public IEnumerator CopyCoroutine(float multiplier)
     {
         originalHp = hp;
@@ -414,6 +416,13 @@ public class Player : MonoBehaviour
         RemoveSkillEffects(skillData); // Copy終了と同時に効果も解除
 
         skillData = null;
+    }
+
+    // スロット発動用: 効果だけ付与して、時間が来たら解除
+    public IEnumerator EffectOnlyCoroutine(SkillData skill)
+    {
+        yield return new WaitForSeconds(copyDuration);
+        RemoveSkillEffects(skill);
     }
 
     public void ApplySkillEffects(SkillData skill, float multiplier)
@@ -451,7 +460,7 @@ public class Player : MonoBehaviour
         }
         transform.localScale = stretchedScale;
 
-        yield return new WaitForSeconds(stretchHoldTime); // ← 追加：伸びた状態を少しキープ
+        yield return new WaitForSeconds(stretchHoldTime); // 伸びた状態を少しキープ
 
         elapsed = 0f;
         while (elapsed < stretchDuration)

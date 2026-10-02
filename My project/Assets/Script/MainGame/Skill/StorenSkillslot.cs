@@ -49,10 +49,10 @@ public class StorenSkillslot : MonoBehaviour
 
     void SelectAndUse(int index)
     {
-        if (skillSlots[index] == null) return; // 空きスロットなら何もしない
-
-        selectedIndex = index;
+        selectedIndex = index;      // 先に選択を更新する
         UpdateSlotColor();
+
+        if (skillSlots[index] == null) return; // 空きなら選択だけ
         player.ActivateCopy();
     }
 
@@ -79,6 +79,11 @@ public class StorenSkillslot : MonoBehaviour
     public SkillData GetSelectedSkill()
     {
         return skillSlots[selectedIndex];
+    }
+
+    public void ConsumeSelectedSkill()
+    {
+        skillSlots[selectedIndex] = null;
     }
 
     public int CountDuplicates(SkillData skill)

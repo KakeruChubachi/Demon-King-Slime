@@ -17,4 +17,4 @@ MonoBehaviour:
   copiedMoveSpeed: 0
   copiedSprite: {fileID: 0}
   effects:
-  - {fileID: 11400000, guid: f3a638c3c2aa64a4582914bbfcf64f5f, type: 2}
+  - {fileID: 11400000, guid: 334813679f33fc341999e3320efeebe0, type: 2}
