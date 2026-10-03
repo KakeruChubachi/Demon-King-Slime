@@ -15,9 +15,13 @@ public class StorenSkillslot : MonoBehaviour
     public TextMeshProUGUI newInfoText; // 右側：拾ったスキルの内容
     public Player player; // Inspectorで設定
 
+    public Image[] slotIcons = new Image[4]; // ★追加：各スロットのアイコン
+    public Image newIcon;                    // ★追加：確認パネル右側のアイコン
+
     void Start()
     {
         UpdateSlotColor();
+        RefreshSlotIcons(); // ★追加
     }
 
     public void ReceiveSkills(SkillData skillData)
@@ -28,6 +32,7 @@ public class StorenSkillslot : MonoBehaviour
             {
                 skillSlots[i] = skillData;
                 Debug.Log("スキルをスロットに保存しました: " + skillData.skillName);
+                RefreshSlotIcons(); // ★追加（return の前）
                 return;
             }
         }
@@ -54,6 +59,17 @@ public class StorenSkillslot : MonoBehaviour
 
         if (skillSlots[index] == null) return; // 空きなら選択だけ
         player.ActivateCopy();
+    }
+
+    // ★追加：スロットのアイコンを現在のスキルに合わせて更新
+    void RefreshSlotIcons()
+    {
+        for (int i = 0; i < slotIcons.Length; i++)
+        {
+            SkillData s = skillSlots[i];
+            slotIcons[i].sprite = (s != null) ? s.icon : null;
+            slotIcons[i].enabled = (s != null && s.icon != null);
+        }
     }
 
     void UpdateSlotColor()
@@ -84,6 +100,7 @@ public class StorenSkillslot : MonoBehaviour
     public void ConsumeSelectedSkill()
     {
         skillSlots[selectedIndex] = null;
+        RefreshSlotIcons(); // ★追加
     }
 
     public int CountDuplicates(SkillData skill)
@@ -103,6 +120,7 @@ public class StorenSkillslot : MonoBehaviour
     {
         Debug.Log(skillSlots[selectedIndex].skillName + " を " + pendingSkill.skillName + " に入れ替えました");
         skillSlots[selectedIndex] = pendingSkill;
+        RefreshSlotIcons(); // ★追加
         pendingSkill = null;
         confirmPanel.SetActive(false);
         Time.timeScale = 1f;
@@ -141,6 +159,10 @@ public class StorenSkillslot : MonoBehaviour
             newInfo += effect.effectName + "\n" + effect.description + "\n\n";
         }
         newInfoText.text = newInfo;
+
+        // ★追加：拾ったスキルのアイコン
+        newIcon.sprite = pendingSkill.icon;
+        newIcon.enabled = (pendingSkill.icon != null);
 
         for (int i = 0; i < slotInfoTexts.Length; i++)
         {
