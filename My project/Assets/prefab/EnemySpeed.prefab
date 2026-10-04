@@ -158,7 +158,7 @@ MonoBehaviour:
   dropRate: 0.1
   SkillOrbprefab: {fileID: 587957185058556469, guid: 743fc6f473c257141b2906b51e85208c, type: 3}
   skillDatas:
-  - {fileID: 11400000, guid: fd2ec15d63dc00541a19905b3f657432, type: 2}
+  - {fileID: 11400000, guid: c474768f083d6cf4b9b03f295ed45dfb, type: 2}
   movementEnabled: 1
   spriteRenderer: {fileID: 8762013316077736036}
   copiedskillData: {fileID: 0}
@@ -168,3 +168,5 @@ MonoBehaviour:
   attackPower: 1
   weakness: 0
   weaknessMultiplier: 2
+  isFinalBoss: 0
+  clearSceneName: Result

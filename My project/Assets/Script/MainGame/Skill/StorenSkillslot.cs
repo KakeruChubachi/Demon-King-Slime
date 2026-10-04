@@ -31,7 +31,7 @@ public class StorenSkillslot : MonoBehaviour
             if (skillSlots[i] == null)
             {
                 skillSlots[i] = skillData;
-                Debug.Log("スキルをスロットに保存しました: " + skillData.skillName);
+               Debug.Log("スキルをスロットに保存しました: " + skillData.skillName);
                 RefreshSlotIcons(); // ★追加（return の前）
                 return;
             }
@@ -46,20 +46,43 @@ public class StorenSkillslot : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha7)) SelectAndUse(0);
-        else if (Input.GetKeyDown(KeyCode.Alpha8)) SelectAndUse(1);
-        else if (Input.GetKeyDown(KeyCode.Alpha9)) SelectAndUse(2);
-        else if (Input.GetKeyDown(KeyCode.Alpha0)) SelectAndUse(3);
+            if (Input.GetKeyDown(KeyCode.Alpha7)) SelectAndUse(3);
+            else if (Input.GetKeyDown(KeyCode.Alpha8)) SelectAndUse(2);
+            else if (Input.GetKeyDown(KeyCode.Alpha9)) SelectAndUse(1);
+            else if (Input.GetKeyDown(KeyCode.Alpha0)) SelectAndUse(0);
+        
     }
+        //if (Input.GetKeyDown(KeyCode.Alpha7)) SelectAndUse(0);
+        //else if (Input.GetKeyDown(KeyCode.Alpha8)) SelectAndUse(1);
+        //else if (Input.GetKeyDown(KeyCode.Alpha9)) SelectAndUse(2);
+        //else if (Input.GetKeyDown(KeyCode.Alpha0)) SelectAndUse(3);
+    
 
     void SelectAndUse(int index)
     {
-        selectedIndex = index;      // 先に選択を更新する
+        Debug.Log("★★★ SelectAndUseに入りました index = " + index);
+
+        selectedIndex = index;
         UpdateSlotColor();
 
-        if (skillSlots[index] == null) return; // 空きなら選択だけ
+        if (skillSlots[index] == null)
+        {
+            Debug.Log("★★★ このスロットは空です");
+            return;
+        }
+
+        Debug.Log("★★★ 発動するスキル：" + skillSlots[index].skillName);
+
         player.ActivateCopy();
     }
+    //void SelectAndUse(int index)
+    //{
+    //    selectedIndex = index;      // 先に選択を更新する
+    //    UpdateSlotColor();
+
+    //    if (skillSlots[index] == null) return; // 空きなら選択だけ
+    //    player.ActivateCopy();
+    //}
 
     // ★追加：スロットのアイコンを現在のスキルに合わせて更新
     void RefreshSlotIcons()
@@ -67,7 +90,7 @@ public class StorenSkillslot : MonoBehaviour
         for (int i = 0; i < slotIcons.Length; i++)
         {
             SkillData s = skillSlots[i];
-            slotIcons[i].sprite = (s != null) ? s.icon : null;
+           slotIcons[i].sprite = (s != null) ? s.icon : null;
             slotIcons[i].enabled = (s != null && s.icon != null);
         }
     }
