@@ -5,6 +5,7 @@ using System.Collections.Generic;
 public class Player : MonoBehaviour
 {
     public float moveSpeed = 5f;
+    Vector2 facingDirection = Vector2.right;
     public float DashSpeed = 10f;
     public bool isDashing = false;
     public float playerRadius = 1.0f;
@@ -50,6 +51,10 @@ public class Player : MonoBehaviour
     float lastRangedTime = 0f;
     float lastMagicTime = 0f;
 
+    [Header("棍棒攻撃")]
+    public GameObject konbouVisual;
+    public float konbouSwingTime = 0.2f;
+
     //元のステータスを保存する変数(Spaceコピーの変身用)
     int originalHp;
     float originalMoveSpeed;
@@ -80,6 +85,11 @@ public class Player : MonoBehaviour
 
         //移動ベクトルを作る
         Vector2 moveDirection = new Vector2(inputX, inputY);
+
+        if (moveDirection.sqrMagnitude > 0.01f)
+        {
+            facingDirection = moveDirection.normalized;
+        }
 
         //実際の移動量
         Vector2 movement = moveDirection * moveSpeed * Time.deltaTime;
@@ -115,6 +125,76 @@ public class Player : MonoBehaviour
             if (e != null)
             {
                 e.TakeDamage(physicalPower, Enemy.AttackType.Physical);
+            }
+        }
+    }
+
+    // ── 棍棒スキル ──
+    public void KonbouAttack(int damage)
+    {
+
+        StartCoroutine(KonbouSwing());//こん棒ふる
+
+        Debug.Log("★★★ 棍棒攻撃を発動しました！ ダメージ：" + damage);
+
+        Vector2 attackPosition =
+            (Vector2)transform.position + facingDirection * 1.5f;
+
+        Collider2D[] hitEnemies =
+            Physics2D.OverlapCircleAll(attackPosition, 1.0f, enemyLayer);
+
+        foreach (Collider2D enemy in hitEnemies)
+        {
+            Enemy e = enemy.GetComponent<Enemy>();
+
+            if (e != null)
+            {
+                Debug.Log("棍棒攻撃がヒット: " + enemy.name);
+
+                e.TakeDamage(damage, Enemy.AttackType.Physical);
+            }
+        }
+    }
+
+    IEnumerator KonbouSwing()
+    {
+        if (konbouVisual == null) yield break;
+
+        konbouVisual.SetActive(true);
+
+        float angle = Mathf.Atan2(facingDirection.y, facingDirection.x) * Mathf.Rad2Deg;
+        konbouVisual.transform.localPosition = facingDirection * 2.0f;
+
+        for (float t = 0; t < 1; t += Time.deltaTime / konbouSwingTime)
+        {
+            float swingAngle = Mathf.Lerp(angle + 60f, angle - 60f, t);
+            konbouVisual.transform.rotation = Quaternion.Euler(0, 0, swingAngle);
+            yield return null;
+        }
+
+        konbouVisual.SetActive(false);
+    }
+
+    public void HeroSwordAttack(int damage)
+    {
+        Collider2D[] enemies =
+            Physics2D.OverlapCircleAll(transform.position, 3f, enemyLayer);
+
+        foreach (Collider2D hit in enemies)
+        {
+            Vector2 direction =
+                ((Vector2)hit.transform.position - (Vector2)transform.position).normalized;
+
+            if (Vector2.Angle(facingDirection, direction) <= 45f)
+            {
+               
+                Enemy enemy = hit.GetComponent<Enemy>();
+
+                if (enemy != null)
+                {
+                    Debug.Log("勇者の剣がヒット：" + enemy.name);
+                    enemy.TakeDamage(damage, Enemy.AttackType.Physical);
+                }
             }
         }
     }
@@ -234,6 +314,23 @@ public class Player : MonoBehaviour
         // 魔法範囲
         Gizmos.color = Color.magenta;
         Gizmos.DrawWireSphere(transform.position, magicRange);
+
+        // 棍棒攻撃の範囲
+        Gizmos.color = Color.yellow;
+
+        Vector2 konbouPosition =
+            (Vector2)transform.position + facingDirection * 2.0f;
+
+        Gizmos.DrawWireSphere(konbouPosition, 1.0f);
+
+        // 勇者の剣の攻撃範囲
+        Gizmos.color = Color.green;
+
+        Vector3 left = Quaternion.Euler(0, 0, 45) * facingDirection * 3f;
+        Vector3 right = Quaternion.Euler(0, 0, -45) * facingDirection * 3f;
+
+        Gizmos.DrawLine(transform.position, transform.position + left);
+        Gizmos.DrawLine(transform.position, transform.position + right);
     }
 
     // 敵(トリガー)に触れた瞬間、自動で呼ばれる関数

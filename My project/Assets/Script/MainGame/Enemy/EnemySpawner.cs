@@ -40,7 +40,7 @@ public class EnemySpawner : MonoBehaviour
         //}
 
         nowTime += Time.deltaTime;
-        Debug.Log("nowTime: " + nowTime);
+        //Debug.Log("nowTime: " + nowTime);
         if (nowTime >= spawnInterval)
         {
             Vector3 pos = spawnPosition.GetSpawnPosition();

@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41132dfe04bc3e74286997ca7f33686e, type: 3}
+  m_Name: Newkonbou
+  m_EditorClassIdentifier: Assembly-CSharp::abc
+  effectName: "\u30B4\u30D6\u30EA\u30F3\u306E\u68CD\u68D2"
+  description: 
+  physicalAttackAmount: 5

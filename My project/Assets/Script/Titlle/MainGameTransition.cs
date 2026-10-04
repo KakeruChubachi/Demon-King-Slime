@@ -11,7 +11,7 @@ public class MainGameTransition : MonoBehaviour
     [SerializeField] private RectTransform slimeImage;
 
     [Header("メインゲームのシーン名")]
-    [SerializeField] private string mainGameSceneName = "MainGame";
+    [SerializeField] private string mainGameSceneName = "Main Game";
 
     [Header("青い画像の最初の大きさ")]
     [SerializeField] private float startScale = 5f;
