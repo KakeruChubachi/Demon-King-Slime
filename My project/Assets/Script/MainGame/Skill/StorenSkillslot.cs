@@ -15,13 +15,17 @@ public class StorenSkillslot : MonoBehaviour
     public TextMeshProUGUI newInfoText; // 右側：拾ったスキルの内容
     public Player player; // Inspectorで設定
 
-    public Image[] slotIcons = new Image[4]; // ★追加：各スロットのアイコン
-    public Image newIcon;                    // ★追加：確認パネル右側のアイコン
+    public Image[] slotIcons = new Image[4]; // 各スロットのアイコン
+    public Image newIcon;                    // 確認パネル右側のアイコン
+
+    // ★追加：交換の絵表示用
+    public Image[] confirmSlotIcons = new Image[4]; // 確認パネル内の各スロットの絵
+    public Image swapOutIcon;                       // 交換される側の絵（選択中スロット）
 
     void Start()
     {
         UpdateSlotColor();
-        RefreshSlotIcons(); // ★追加
+        RefreshSlotIcons();
     }
 
     public void ReceiveSkills(SkillData skillData)
@@ -31,8 +35,8 @@ public class StorenSkillslot : MonoBehaviour
             if (skillSlots[i] == null)
             {
                 skillSlots[i] = skillData;
-               Debug.Log("スキルをスロットに保存しました: " + skillData.skillName);
-                RefreshSlotIcons(); // ★追加（return の前）
+                Debug.Log("スキルをスロットに保存しました: " + skillData.skillName);
+                RefreshSlotIcons();
                 return;
             }
         }
@@ -46,17 +50,11 @@ public class StorenSkillslot : MonoBehaviour
 
     void Update()
     {
-            if (Input.GetKeyDown(KeyCode.Alpha7)) SelectAndUse(3);
-            else if (Input.GetKeyDown(KeyCode.Alpha8)) SelectAndUse(2);
-            else if (Input.GetKeyDown(KeyCode.Alpha9)) SelectAndUse(1);
-            else if (Input.GetKeyDown(KeyCode.Alpha0)) SelectAndUse(0);
-        
+        if (Input.GetKeyDown(KeyCode.Alpha7)) SelectAndUse(3);
+        else if (Input.GetKeyDown(KeyCode.Alpha8)) SelectAndUse(2);
+        else if (Input.GetKeyDown(KeyCode.Alpha9)) SelectAndUse(1);
+        else if (Input.GetKeyDown(KeyCode.Alpha0)) SelectAndUse(0);
     }
-        //if (Input.GetKeyDown(KeyCode.Alpha7)) SelectAndUse(0);
-        //else if (Input.GetKeyDown(KeyCode.Alpha8)) SelectAndUse(1);
-        //else if (Input.GetKeyDown(KeyCode.Alpha9)) SelectAndUse(2);
-        //else if (Input.GetKeyDown(KeyCode.Alpha0)) SelectAndUse(3);
-    
 
     void SelectAndUse(int index)
     {
@@ -64,6 +62,9 @@ public class StorenSkillslot : MonoBehaviour
 
         selectedIndex = index;
         UpdateSlotColor();
+
+        // ★追加：確認パネル中は選択だけ（スキルは発動しない）
+        if (confirmPanel.activeSelf) return;
 
         if (skillSlots[index] == null)
         {
@@ -75,22 +76,14 @@ public class StorenSkillslot : MonoBehaviour
 
         player.ActivateCopy();
     }
-    //void SelectAndUse(int index)
-    //{
-    //    selectedIndex = index;      // 先に選択を更新する
-    //    UpdateSlotColor();
 
-    //    if (skillSlots[index] == null) return; // 空きなら選択だけ
-    //    player.ActivateCopy();
-    //}
-
-    // ★追加：スロットのアイコンを現在のスキルに合わせて更新
+    // スロットのアイコンを現在のスキルに合わせて更新
     void RefreshSlotIcons()
     {
         for (int i = 0; i < slotIcons.Length; i++)
         {
             SkillData s = skillSlots[i];
-           slotIcons[i].sprite = (s != null) ? s.icon : null;
+            slotIcons[i].sprite = (s != null) ? s.icon : null;
             slotIcons[i].enabled = (s != null && s.icon != null);
         }
     }
@@ -123,7 +116,7 @@ public class StorenSkillslot : MonoBehaviour
     public void ConsumeSelectedSkill()
     {
         skillSlots[selectedIndex] = null;
-        RefreshSlotIcons(); // ★追加
+        RefreshSlotIcons();
     }
 
     public int CountDuplicates(SkillData skill)
@@ -143,7 +136,7 @@ public class StorenSkillslot : MonoBehaviour
     {
         Debug.Log(skillSlots[selectedIndex].skillName + " を " + pendingSkill.skillName + " に入れ替えました");
         skillSlots[selectedIndex] = pendingSkill;
-        RefreshSlotIcons(); // ★追加
+        RefreshSlotIcons();
         pendingSkill = null;
         confirmPanel.SetActive(false);
         Time.timeScale = 1f;
@@ -183,7 +176,7 @@ public class StorenSkillslot : MonoBehaviour
         }
         newInfoText.text = newInfo;
 
-        // ★追加：拾ったスキルのアイコン
+        // 拾ったスキルのアイコン
         newIcon.sprite = pendingSkill.icon;
         newIcon.enabled = (pendingSkill.icon != null);
 
@@ -191,5 +184,19 @@ public class StorenSkillslot : MonoBehaviour
         {
             slotInfoTexts[i].color = (i == selectedIndex) ? highlightColor : normalColor;
         }
+
+        // ★追加：確認パネル内の各スロットの絵（選択中だけ少し大きくする）
+        for (int i = 0; i < confirmSlotIcons.Length; i++)
+        {
+            SkillData s = skillSlots[i];
+            confirmSlotIcons[i].sprite = (s != null) ? s.icon : null;
+            confirmSlotIcons[i].enabled = (s != null && s.icon != null);
+            confirmSlotIcons[i].transform.localScale = (i == selectedIndex) ? Vector3.one * 1.2f : Vector3.one;
+        }
+
+        // ★追加：「交換される絵 → 新しい絵」
+        SkillData outSkill = skillSlots[selectedIndex];
+        swapOutIcon.sprite = (outSkill != null) ? outSkill.icon : null;
+        swapOutIcon.enabled = (outSkill != null && outSkill.icon != null);
     }
 }

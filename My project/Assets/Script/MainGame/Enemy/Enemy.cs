@@ -31,6 +31,7 @@ public class Enemy : MonoBehaviour
     public void TakeDamage(int damage, AttackType type = AttackType.Physical)
     {
         if (isDead) return;
+        Debug.Log($"[{name}] damage={damage} hp={hp} type={type}");
         if (type == weakness)
         {
             damage = Mathf.RoundToInt(damage * weaknessMultiplier);

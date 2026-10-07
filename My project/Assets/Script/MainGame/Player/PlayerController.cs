@@ -74,6 +74,7 @@ public class Player : MonoBehaviour
         uIController.SetLife(hp);
         barrierVisual.SetActive(false); // バリア状態のビジュアルを非表示にする
         uIController.SetExp(exp, levelUpExp);
+        BGMManager.Instance.Play(1);
     }
 
     // Update is called once per frame
