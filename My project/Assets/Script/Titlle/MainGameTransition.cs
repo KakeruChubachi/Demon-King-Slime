@@ -27,6 +27,7 @@ public class MainGameTransition : MonoBehaviour
     private void Start()
     {
         transitionPanel.SetActive(false);
+        BGMManager.Instance.Play(0);
     }
 
     // スタートボタンから呼び出す

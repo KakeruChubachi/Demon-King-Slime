@@ -51,6 +51,9 @@ public class Player : MonoBehaviour
     float lastRangedTime = 0f;
     float lastMagicTime = 0f;
 
+    public GameObject bulletPrefab;       // ƒvƒŒƒCƒ„[‚ªŒ‚‚Â’e‚ÌƒvƒŒƒnƒu
+    public Transform bulletSpawnPoint;    
+
     [Header("–_UŒ‚")]
     public GameObject konbouVisual;
     public float konbouSwingTime = 0.2f;
@@ -204,6 +207,7 @@ public class Player : MonoBehaviour
     {
         Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(transform.position, rangedRange, enemyLayer);
         if (hitEnemies.Length == 0) return;
+        Debug.Log("ššš Œ©‚Â‚©‚Á‚½“G‚Ì”: " + hitEnemies.Length);
 
         // ˆê”Ô‹ß‚¢“G‚ğ1‘Ì‚¾‚¯‘_‚¤
         Collider2D nearest = null;
@@ -220,18 +224,49 @@ public class Player : MonoBehaviour
 
         if (nearest == null) return;
 
-        Debug.Log("‰“‹——£UŒ‚‚ªƒqƒbƒg: " + nearest.name);
+
+        // ˆê”Ô‹ß‚¢“G‚Ö‚Ì•ûŒü‚ğŒvZ
+        Vector2 direction = ((Vector2)nearest.transform.position -(Vector2)transform.position).normalized;
+
+
+        // ’e‚ğ”­Ë
+        if (bulletPrefab != null)
+        {
+            Vector3 spawnPosition = transform.position;
+
+            if (bulletSpawnPoint != null)
+            {
+                spawnPosition = bulletSpawnPoint.position;
+            }
+
+            GameObject bullet = Instantiate(bulletPrefab, spawnPosition, Quaternion.identity);
+            Bullet bulletScript = bullet.GetComponent<Bullet>();
+
+            Debug.Log("’e‚ğ¶¬‚µ‚Ü‚µ‚½:");
+
+            if (bulletScript != null)
+            {
+                bulletScript.SetDirection(direction);
+            }
+        }
 
         if (rangedEffectPrefab != null)
         {
             Instantiate(rangedEffectPrefab, nearest.transform.position, Quaternion.identity);
         }
-
+        
         Enemy e = nearest.GetComponent<Enemy>();
         if (e != null)
         {
             e.TakeDamage(rangedPower, Enemy.AttackType.Ranged);
         }
+    }
+
+
+    // „Ÿ„Ÿ ‰“‹——£UŒ‚iƒXƒLƒ‹j „Ÿ„Ÿ
+public void BulletSkill()
+    {
+        RangedAttack();
     }
 
     // „Ÿ„Ÿ –‚–@UŒ‚i”ÍˆÍUŒ‚j „Ÿ„Ÿ
