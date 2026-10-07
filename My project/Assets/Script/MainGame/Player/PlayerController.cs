@@ -388,7 +388,9 @@ public class Player : MonoBehaviour
         {
             skillData = nearSkillOrb.GetSkillOrb();
             storenSkillslot.ReceiveSkills(skillData);
-            //nearSkillOrbs.Add(nearSkillOrb);
+
+         
+           
         }
     }
 
@@ -420,6 +422,10 @@ public class Player : MonoBehaviour
         if (hp <= 0)
         {
             Debug.Log("ゲームオーバー");
+
+            // ★現在持っているスキルをリザルト用に保存
+            storenSkillslot.SaveSkillsForResult();
+
             FindFirstObjectByType<SceneFader>().FadeToScene("Result");
         }
     }
