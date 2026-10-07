@@ -51,6 +51,9 @@ public class Player : MonoBehaviour
     float lastRangedTime = 0f;
     float lastMagicTime = 0f;
 
+    public GameObject bulletPrefab;       // プレイヤーが撃つ弾のプレハブ
+    public Transform bulletSpawnPoint;    
+
     [Header("棍棒攻撃")]
     public GameObject konbouVisual;
     public float konbouSwingTime = 0.2f;
@@ -74,7 +77,6 @@ public class Player : MonoBehaviour
         uIController.SetLife(hp);
         barrierVisual.SetActive(false); // バリア状態のビジュアルを非表示にする
         uIController.SetExp(exp, levelUpExp);
-        BGMManager.Instance.Play(1);
     }
 
     // Update is called once per frame
@@ -205,6 +207,7 @@ public class Player : MonoBehaviour
     {
         Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(transform.position, rangedRange, enemyLayer);
         if (hitEnemies.Length == 0) return;
+        Debug.Log("★★★ 見つかった敵の数: " + hitEnemies.Length);
 
         // 一番近い敵を1体だけ狙う
         Collider2D nearest = null;
@@ -221,18 +224,49 @@ public class Player : MonoBehaviour
 
         if (nearest == null) return;
 
-        Debug.Log("遠距離攻撃がヒット: " + nearest.name);
+
+        // 一番近い敵への方向を計算
+        Vector2 direction = ((Vector2)nearest.transform.position -(Vector2)transform.position).normalized;
+
+
+        // 弾を発射
+        if (bulletPrefab != null)
+        {
+            Vector3 spawnPosition = transform.position;
+
+            if (bulletSpawnPoint != null)
+            {
+                spawnPosition = bulletSpawnPoint.position;
+            }
+
+            GameObject bullet = Instantiate(bulletPrefab, spawnPosition, Quaternion.identity);
+            Bullet bulletScript = bullet.GetComponent<Bullet>();
+
+            Debug.Log("弾を生成しました:");
+
+            if (bulletScript != null)
+            {
+                bulletScript.SetDirection(direction);
+            }
+        }
 
         if (rangedEffectPrefab != null)
         {
             Instantiate(rangedEffectPrefab, nearest.transform.position, Quaternion.identity);
         }
-
+        
         Enemy e = nearest.GetComponent<Enemy>();
         if (e != null)
         {
             e.TakeDamage(rangedPower, Enemy.AttackType.Ranged);
         }
+    }
+
+
+    // ── 遠距離攻撃（スキル） ──
+public void BulletSkill()
+    {
+        RangedAttack();
     }
 
     // ── 魔法攻撃（範囲攻撃） ──

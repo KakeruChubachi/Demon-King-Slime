@@ -2412,6 +2412,8 @@ MonoBehaviour:
   magicRange: 6
   rangedCooldown: 1.5
   magicCooldown: 3
+  bulletPrefab: {fileID: 7511239864004692604, guid: 5cf10f1f6a62a1e43b60b0c9e853043a, type: 3}
+  bulletSpawnPoint: {fileID: 710664056}
   konbouVisual: {fileID: 278551105}
   konbouSwingTime: 0.2
   canRangedAttack: 0
