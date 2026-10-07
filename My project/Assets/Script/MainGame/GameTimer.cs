@@ -1,9 +1,11 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameTimer : MonoBehaviour
 {
     public GameObject[] bossPrefabs = new GameObject[3]; // ボスを3体設定（Boss, Boss2, Boss3）
     public UIController uIController;
+    public StorenSkillslot storenSkillslot;
     public float[] phaseTimeLimits = { 10f, 10f, 10f }; // 各フェーズの制限時間
     public float bossAppearanceDelay = 1.5f; // ボス出現までの予告時間
 
@@ -17,6 +19,7 @@ public class GameTimer : MonoBehaviour
 
     void Start()
     {
+       
         timeLimit = phaseTimeLimits[currentPhase];
         bossApprearanceTime = bossAppearanceDelay;
         uIController.SetTime(timeLimit, phaseTimeLimits[currentPhase]);
@@ -54,6 +57,7 @@ public class GameTimer : MonoBehaviour
             if (currentBossInstance == null)
             {
                 currentPhase++;
+                Debug.Log("★★★ ボス消滅を検知 currentPhase = " + currentPhase + " / ボス数 = " + bossPrefabs.Length);
                 Debug.Log((currentPhase) + "フェーズ目クリア");
 
                 if (currentPhase < bossPrefabs.Length)
@@ -69,6 +73,12 @@ public class GameTimer : MonoBehaviour
                 {
                     Debug.Log("全ボスを撃破しました！ゲームクリア");
                     // TODO: クリア画面への遷移などをここに追加
+
+                    // 現在持っている4つのスキルをリザルト用に保存
+                    storenSkillslot.SaveSkillsForResult();
+
+                    // リザルト画面へ移動
+                    SceneManager.LoadScene("Result");
                 }
             }
         }

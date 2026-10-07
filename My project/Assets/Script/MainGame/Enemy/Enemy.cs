@@ -94,6 +94,20 @@ public class Enemy : MonoBehaviour
         }
         if (isFinalBoss)
         {
+            StorenSkillslot skillSlot = FindFirstObjectByType<StorenSkillslot>();
+            Player player = FindFirstObjectByType<Player>();
+
+            if (skillSlot != null)
+            {
+                skillSlot.SaveSkillsForResult();
+            }
+
+            // šƒXƒ‰ƒCƒ€ƒŒƒxƒ‹‚ğ•Û‘¶
+            if (player != null && ResultSkillStorage.Instance != null)
+            {
+                ResultSkillStorage.Instance.resultSlimeLevel = player.nowLevel;
+            }
+
             SceneManager.LoadScene(clearSceneName);
             yield break;
         }

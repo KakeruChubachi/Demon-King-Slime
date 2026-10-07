@@ -106,7 +106,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SkillOrb
   target: {fileID: 0}
-  skillData: {fileID: 11400000, guid: fd2ec15d63dc00541a19905b3f657432, type: 2}
+  skillData: {fileID: 0}
 --- !u!70 &2574530499206687884
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
