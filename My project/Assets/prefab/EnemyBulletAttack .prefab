@@ -110,19 +110,21 @@ MonoBehaviour:
   moveSpeed: 2
   target: {fileID: 0}
   spawnOrb: {fileID: 4293523638711481329, guid: 709616cbd870e824ba83ccdf6beee787, type: 3}
-  dropRate: 0.1
+  dropRate: 100
   SkillOrbprefab: {fileID: 587957185058556469, guid: 743fc6f473c257141b2906b51e85208c, type: 3}
   skillDatas:
   - {fileID: 11400000, guid: fd2ec15d63dc00541a19905b3f657432, type: 2}
   movementEnabled: 1
   spriteRenderer: {fileID: 5627908005183016110}
-  copiedskillData: {fileID: 0}
+  copiedskillData: {fileID: 11400000, guid: 8161fbd18f80a2a4dbded2b3e8e928a9, type: 2}
   ExpbaseValue: 10
   isDead: 0
   SaveHp: 0
   attackPower: 1
   weakness: 0
   weaknessMultiplier: 2
+  isFinalBoss: 0
+  clearSceneName: Result
 --- !u!114 &4409322453525152732
 MonoBehaviour:
   m_ObjectHideFlags: 0

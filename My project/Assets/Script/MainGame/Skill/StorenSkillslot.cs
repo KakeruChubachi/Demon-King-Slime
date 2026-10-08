@@ -30,6 +30,12 @@ public class StorenSkillslot : MonoBehaviour
 
     public void ReceiveSkills(SkillData skillData)
     {
+
+        // ★一度でも取得したスキルとして保存
+        if (ResultSkillStorage.Instance != null)
+        {
+            ResultSkillStorage.Instance.AddAcquiredSkill(skillData);
+        }
         for (int i = 0; i < skillSlots.Length; i++)
         {
             if (skillSlots[i] == null)
@@ -134,7 +140,16 @@ public class StorenSkillslot : MonoBehaviour
 
     public void ConfirmSwap()
     {
+        if (ResultSkillStorage.Instance != null)
+        {
+            ResultSkillStorage.Instance.AddAcquiredSkill(skillSlots[selectedIndex]);
+            ResultSkillStorage.Instance.AddAcquiredSkill(pendingSkill);
+        }
+
+
         Debug.Log(skillSlots[selectedIndex].skillName + " を " + pendingSkill.skillName + " に入れ替えました");
+
+
         skillSlots[selectedIndex] = pendingSkill;
         RefreshSlotIcons();
         pendingSkill = null;
@@ -198,5 +213,35 @@ public class StorenSkillslot : MonoBehaviour
         SkillData outSkill = skillSlots[selectedIndex];
         swapOutIcon.sprite = (outSkill != null) ? outSkill.icon : null;
         swapOutIcon.enabled = (outSkill != null && outSkill.icon != null);
+    }
+
+    public void SaveSkillsForResult()
+    {
+        if (ResultSkillStorage.Instance == null)
+        {
+            Debug.LogWarning("ResultSkillStorageがありません");
+            return;
+        }
+
+        // ★確認用：現在の4スロットの中身を見る
+        for (int i = 0; i < skillSlots.Length; i++)
+        {
+            if (skillSlots[i] != null)
+            {
+                Debug.Log(
+                    "保存前 スロット" + i +
+                    " / スキル名：" + skillSlots[i].skillName +
+                    " / アイコン：" + skillSlots[i].icon
+                );
+            }
+            else
+            {
+                Debug.Log("保存前 スロット" + i + " / 空です");
+            }
+        }
+
+        ResultSkillStorage.Instance.SaveSkills(skillSlots);
+
+        Debug.Log("現在の4スキルをリザルト用に保存しました");
     }
 }

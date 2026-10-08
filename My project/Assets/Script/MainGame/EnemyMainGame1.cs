@@ -12,9 +12,11 @@ public class EnemyMainGame1 : MonoBehaviour
     public void TakeDamage(int damage)
     {
         hp -= damage;
+        Debug.Log("★★★ " + gameObject.name + " ダメージ：" + damage + " 残りHP：" + hp);
         if (hp <= 0)
         {
             Destroy(gameObject);
+            Debug.Log("★★★ " + gameObject.name + " 撃破！Destroyします");
         }
     }
 
