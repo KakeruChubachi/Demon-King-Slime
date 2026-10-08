@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6e5947c1b8f0c54bb2f2e21c3d5f4bf, type: 3}
+  m_Name: RangedFireAttack
+  m_EditorClassIdentifier: Assembly-CSharp::RangedFireAttackEffect
+  effectName: "\u9060\u8DDD\u96E2\u708E\u653B\u6483"
+  icon: {fileID: 4945239985283531135, guid: 222cbf24da7283447b394676c30b0361, type: 3}
+  description: 
+  projectilePrefab: {fileID: 3298010143390892433, guid: 7732861cabb0f8443b82d38611bd3bbd, type: 3}
+  baseDamage: 10
+  interval: 1.5
+  range: 8
