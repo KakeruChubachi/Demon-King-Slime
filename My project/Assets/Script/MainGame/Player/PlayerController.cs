@@ -6,6 +6,7 @@ public class Player : MonoBehaviour
 {
     public float moveSpeed = 5f;
     Vector2 facingDirection = Vector2.right;
+    public Vector2 FacingDirection => facingDirection; // ★追加：他のスクリプトから向きを読む用
     public float DashSpeed = 10f;
     public bool isDashing = false;
     public float playerRadius = 1.0f;
@@ -52,7 +53,7 @@ public class Player : MonoBehaviour
     float lastMagicTime = 0f;
 
     public GameObject bulletPrefab;       // プレイヤーが撃つ弾のプレハブ
-    public Transform bulletSpawnPoint;    
+    public Transform bulletSpawnPoint;
 
     [Header("棍棒攻撃")]
     public GameObject konbouVisual;
@@ -190,7 +191,7 @@ public class Player : MonoBehaviour
 
             if (Vector2.Angle(facingDirection, direction) <= 45f)
             {
-               
+
                 Enemy enemy = hit.GetComponent<Enemy>();
 
                 if (enemy != null)
@@ -244,7 +245,7 @@ public class Player : MonoBehaviour
 
 
         // 一番近い敵への方向を計算
-        Vector2 direction = ((Vector2)nearest.transform.position -(Vector2)transform.position).normalized;
+        Vector2 direction = ((Vector2)nearest.transform.position - (Vector2)transform.position).normalized;
 
 
         // 弾を発射
@@ -272,7 +273,7 @@ public class Player : MonoBehaviour
         {
             Instantiate(rangedEffectPrefab, nearest.transform.position, Quaternion.identity);
         }
-        
+
         Enemy e = nearest.GetComponent<Enemy>();
         if (e != null)
         {
@@ -282,7 +283,7 @@ public class Player : MonoBehaviour
 
 
     // ── 遠距離攻撃（スキル） ──
-public void BulletSkill(int damage)
+    public void BulletSkill(int damage)
     {
 
         RangedAttack();
@@ -443,8 +444,8 @@ public void BulletSkill(int damage)
             skillData = nearSkillOrb.GetSkillOrb();
             storenSkillslot.ReceiveSkills(skillData);
 
-         
-           
+
+
         }
     }
 
