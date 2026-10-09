@@ -57,7 +57,9 @@ public class Player : MonoBehaviour
 
     [Header("棍棒攻撃")]
     public GameObject konbouVisual;
+    public GameObject ClubVisual;
     public float konbouSwingTime = 0.2f;
+    public float ClubSwingTime = 0.2f;
 
     //元のステータスを保存する変数(Spaceコピーの変身用)
     int originalHp;
@@ -178,6 +180,25 @@ public class Player : MonoBehaviour
 
         konbouVisual.SetActive(false);
     }
+    public IEnumerator ClubSwing()
+    {
+        if (ClubVisual == null) yield break;
+
+        ClubVisual.SetActive(true);
+
+        float angle = Mathf.Atan2(facingDirection.y, facingDirection.x) * Mathf.Rad2Deg;
+        ClubVisual.transform.localPosition = facingDirection * 2.0f;
+
+        for (float t = 0; t < 1; t += Time.deltaTime / ClubSwingTime)
+        {
+            float swingAngle = Mathf.Lerp(angle + 60f, angle - 60f, t);
+            ClubVisual.transform.rotation = Quaternion.Euler(0, 0, swingAngle);
+            yield return null;
+        }
+
+        ClubVisual.SetActive(false);
+    }
+
 
     public void HeroSwordAttack(int damage)
     {
