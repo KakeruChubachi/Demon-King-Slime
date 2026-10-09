@@ -338,12 +338,12 @@ public class Player : MonoBehaviour
         {
             nowLevel++;
             exp -= levelUpExp;
-            levelUpExp += 5;
+            levelUpExp += 20;
 
             hp += 3;
-            physicalPower += 2;
-            rangedPower += 2;
-            magicPower += 2;
+            physicalPower += 1;
+            rangedPower += 1;
+            magicPower += 1;
 
             uIController.SetExp(exp, levelUpExp);
             uIController.SetSllimeLevel(nowLevel);

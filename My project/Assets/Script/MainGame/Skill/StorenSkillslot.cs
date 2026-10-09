@@ -1,4 +1,4 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
@@ -11,27 +11,38 @@ public class StorenSkillslot : MonoBehaviour
     public Color normalColor = Color.white;
     public GameObject confirmPanel;
     private SkillData pendingSkill;
-    public TextMeshProUGUI[] slotInfoTexts = new TextMeshProUGUI[4]; // 4ƒXƒƒbƒg•ª‚Ì“à—e•\¦
-    public TextMeshProUGUI newInfoText; // ‰E‘¤FE‚Á‚½ƒXƒLƒ‹‚Ì“à—e
-    public Player player; // Inspector‚Åİ’è
+    public TextMeshProUGUI[] slotInfoTexts = new TextMeshProUGUI[4]; // 4ã‚¹ãƒ­ãƒƒãƒˆåˆ†ã®å†…å®¹è¡¨ç¤º
+    public TextMeshProUGUI newInfoText; // å³å´ï¼šæ‹¾ã£ãŸã‚¹ã‚­ãƒ«ã®å†…å®¹
+    public Player player; // Inspectorã§è¨­å®š
 
-    public Image[] slotIcons = new Image[4]; // ŠeƒXƒƒbƒg‚ÌƒAƒCƒRƒ“
-    public Image newIcon;                    // Šm”Fƒpƒlƒ‹‰E‘¤‚ÌƒAƒCƒRƒ“
+    public Image[] slotIcons = new Image[4]; // å„ã‚¹ãƒ­ãƒƒãƒˆã®ã‚¢ã‚¤ã‚³ãƒ³
+    public Image newIcon;                    // ç¢ºèªãƒ‘ãƒãƒ«å³å´ã®ã‚¢ã‚¤ã‚³ãƒ³
 
-    // š’Ç‰ÁFŒğŠ·‚ÌŠG•\¦—p
-    public Image[] confirmSlotIcons = new Image[4]; // Šm”Fƒpƒlƒ‹“à‚ÌŠeƒXƒƒbƒg‚ÌŠG
-    public Image swapOutIcon;                       // ŒğŠ·‚³‚ê‚é‘¤‚ÌŠGi‘I‘ğ’†ƒXƒƒbƒgj
+    // â˜…è¿½åŠ ï¼šäº¤æ›ã®çµµè¡¨ç¤ºç”¨
+    public Image[] confirmSlotIcons = new Image[4]; // ç¢ºèªãƒ‘ãƒãƒ«å†…ã®å„ã‚¹ãƒ­ãƒƒãƒˆã®çµµ
+    public Image swapOutIcon;                       // äº¤æ›ã•ã‚Œã‚‹å´ã®çµµï¼ˆé¸æŠä¸­ã‚¹ãƒ­ãƒƒãƒˆï¼‰
 
     void Start()
     {
+        // ç”»é¢ä¸Šã®å·¦ã‹ã‚‰é †ã« Element 0ã€œ3 ã«ãªã‚‹ã‚ˆã†ä¸¦ã¹æ›¿ãˆã‚‹
+        SortLeftToRight(slotImages);
+        SortLeftToRight(slotIcons);
+        SortLeftToRight(confirmSlotIcons);
+        SortLeftToRight(slotInfoTexts);
+
         UpdateSlotColor();
         RefreshSlotIcons();
+    }
+
+    static void SortLeftToRight<T>(T[] arr) where T : Component
+    {
+        System.Array.Sort(arr, (a, b) => a.transform.position.x.CompareTo(b.transform.position.x));
     }
 
     public void ReceiveSkills(SkillData skillData)
     {
 
-        // šˆê“x‚Å‚àæ“¾‚µ‚½ƒXƒLƒ‹‚Æ‚µ‚Ä•Û‘¶
+        // â˜…ä¸€åº¦ã§ã‚‚å–å¾—ã—ãŸã‚¹ã‚­ãƒ«ã¨ã—ã¦ä¿å­˜
         if (ResultSkillStorage.Instance != null)
         {
             ResultSkillStorage.Instance.AddAcquiredSkill(skillData);
@@ -41,13 +52,13 @@ public class StorenSkillslot : MonoBehaviour
             if (skillSlots[i] == null)
             {
                 skillSlots[i] = skillData;
-                Debug.Log("ƒXƒLƒ‹‚ğƒXƒƒbƒg‚É•Û‘¶‚µ‚Ü‚µ‚½: " + skillData.skillName);
+                Debug.Log("ã‚¹ã‚­ãƒ«ã‚’ã‚¹ãƒ­ãƒƒãƒˆã«ä¿å­˜ã—ã¾ã—ãŸ: " + skillData.skillName);
                 RefreshSlotIcons();
                 return;
             }
         }
 
-        // –ƒ^ƒ“‚È‚çŠm”Fƒpƒlƒ‹‚ğ•\¦‚·‚é
+        // æº€ã‚¿ãƒ³ãªã‚‰ç¢ºèªãƒ‘ãƒãƒ«ã‚’è¡¨ç¤ºã™ã‚‹
         pendingSkill = skillData;
         confirmPanel.SetActive(true);
         Time.timeScale = 0f;
@@ -56,34 +67,34 @@ public class StorenSkillslot : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha7)) SelectAndUse(3);
-        else if (Input.GetKeyDown(KeyCode.Alpha8)) SelectAndUse(2);
-        else if (Input.GetKeyDown(KeyCode.Alpha9)) SelectAndUse(1);
-        else if (Input.GetKeyDown(KeyCode.Alpha0)) SelectAndUse(0);
+        if (Input.GetKeyDown(KeyCode.Alpha7)) SelectAndUse(0);
+        else if (Input.GetKeyDown(KeyCode.Alpha8)) SelectAndUse(1);
+        else if (Input.GetKeyDown(KeyCode.Alpha9)) SelectAndUse(2);
+        else if (Input.GetKeyDown(KeyCode.Alpha0)) SelectAndUse(3);
     }
 
     void SelectAndUse(int index)
     {
-        Debug.Log("ššš SelectAndUse‚É“ü‚è‚Ü‚µ‚½ index = " + index);
+        Debug.Log("â˜…â˜…â˜… SelectAndUseã«å…¥ã‚Šã¾ã—ãŸ index = " + index);
 
         selectedIndex = index;
         UpdateSlotColor();
 
-        // š’Ç‰ÁFŠm”Fƒpƒlƒ‹’†‚Í‘I‘ğ‚¾‚¯iƒXƒLƒ‹‚Í”­“®‚µ‚È‚¢j
+        // â˜…è¿½åŠ ï¼šç¢ºèªãƒ‘ãƒãƒ«ä¸­ã¯é¸æŠã ã‘ï¼ˆã‚¹ã‚­ãƒ«ã¯ç™ºå‹•ã—ãªã„ï¼‰
         if (confirmPanel.activeSelf) return;
 
         if (skillSlots[index] == null)
         {
-            Debug.Log("ššš ‚±‚ÌƒXƒƒbƒg‚Í‹ó‚Å‚·");
+            Debug.Log("â˜…â˜…â˜… ã“ã®ã‚¹ãƒ­ãƒƒãƒˆã¯ç©ºã§ã™");
             return;
         }
 
-        Debug.Log("ššš ”­“®‚·‚éƒXƒLƒ‹F" + skillSlots[index].skillName);
+        Debug.Log("â˜…â˜…â˜… ç™ºå‹•ã™ã‚‹ã‚¹ã‚­ãƒ«ï¼š" + skillSlots[index].skillName);
 
         player.ActivateCopy();
     }
 
-    // ƒXƒƒbƒg‚ÌƒAƒCƒRƒ“‚ğŒ»İ‚ÌƒXƒLƒ‹‚É‡‚í‚¹‚ÄXV
+    // ã‚¹ãƒ­ãƒƒãƒˆã®ã‚¢ã‚¤ã‚³ãƒ³ã‚’ç¾åœ¨ã®ã‚¹ã‚­ãƒ«ã«åˆã‚ã›ã¦æ›´æ–°
     void RefreshSlotIcons()
     {
         for (int i = 0; i < slotIcons.Length; i++)
@@ -147,7 +158,7 @@ public class StorenSkillslot : MonoBehaviour
         }
 
 
-        Debug.Log(skillSlots[selectedIndex].skillName + " ‚ğ " + pendingSkill.skillName + " ‚É“ü‚ê‘Ö‚¦‚Ü‚µ‚½");
+        Debug.Log(skillSlots[selectedIndex].skillName + " ã‚’ " + pendingSkill.skillName + " ã«å…¥ã‚Œæ›¿ãˆã¾ã—ãŸ");
 
 
         skillSlots[selectedIndex] = pendingSkill;
@@ -159,7 +170,7 @@ public class StorenSkillslot : MonoBehaviour
 
     public void CancelSwap()
     {
-        Debug.Log(pendingSkill.skillName + " ‚Ì“üè‚ğƒLƒƒƒ“ƒZƒ‹‚µ‚Ü‚µ‚½");
+        Debug.Log(pendingSkill.skillName + " ã®å…¥æ‰‹ã‚’ã‚­ãƒ£ãƒ³ã‚»ãƒ«ã—ã¾ã—ãŸ");
         pendingSkill = null;
         confirmPanel.SetActive(false);
         Time.timeScale = 1f;
@@ -179,7 +190,7 @@ public class StorenSkillslot : MonoBehaviour
             }
             else
             {
-                info = "i‹ó‚«j";
+                info = "ï¼ˆç©ºãï¼‰";
             }
             slotInfoTexts[i].text = info;
         }
@@ -191,7 +202,7 @@ public class StorenSkillslot : MonoBehaviour
         }
         newInfoText.text = newInfo;
 
-        // E‚Á‚½ƒXƒLƒ‹‚ÌƒAƒCƒRƒ“
+        // æ‹¾ã£ãŸã‚¹ã‚­ãƒ«ã®ã‚¢ã‚¤ã‚³ãƒ³
         newIcon.sprite = pendingSkill.icon;
         newIcon.enabled = (pendingSkill.icon != null);
 
@@ -200,7 +211,7 @@ public class StorenSkillslot : MonoBehaviour
             slotInfoTexts[i].color = (i == selectedIndex) ? highlightColor : normalColor;
         }
 
-        // š’Ç‰ÁFŠm”Fƒpƒlƒ‹“à‚ÌŠeƒXƒƒbƒg‚ÌŠGi‘I‘ğ’†‚¾‚¯­‚µ‘å‚«‚­‚·‚éj
+        // â˜…è¿½åŠ ï¼šç¢ºèªãƒ‘ãƒãƒ«å†…ã®å„ã‚¹ãƒ­ãƒƒãƒˆã®çµµï¼ˆé¸æŠä¸­ã ã‘å°‘ã—å¤§ããã™ã‚‹ï¼‰
         for (int i = 0; i < confirmSlotIcons.Length; i++)
         {
             SkillData s = skillSlots[i];
@@ -209,7 +220,7 @@ public class StorenSkillslot : MonoBehaviour
             confirmSlotIcons[i].transform.localScale = (i == selectedIndex) ? Vector3.one * 1.2f : Vector3.one;
         }
 
-        // š’Ç‰ÁFuŒğŠ·‚³‚ê‚éŠG ¨ V‚µ‚¢ŠGv
+        // â˜…è¿½åŠ ï¼šã€Œäº¤æ›ã•ã‚Œã‚‹çµµ â†’ æ–°ã—ã„çµµã€
         SkillData outSkill = skillSlots[selectedIndex];
         swapOutIcon.sprite = (outSkill != null) ? outSkill.icon : null;
         swapOutIcon.enabled = (outSkill != null && outSkill.icon != null);
@@ -219,29 +230,29 @@ public class StorenSkillslot : MonoBehaviour
     {
         if (ResultSkillStorage.Instance == null)
         {
-            Debug.LogWarning("ResultSkillStorage‚ª‚ ‚è‚Ü‚¹‚ñ");
+            Debug.LogWarning("ResultSkillStorageãŒã‚ã‚Šã¾ã›ã‚“");
             return;
         }
 
-        // šŠm”F—pFŒ»İ‚Ì4ƒXƒƒbƒg‚Ì’†g‚ğŒ©‚é
+        // â˜…ç¢ºèªç”¨ï¼šç¾åœ¨ã®4ã‚¹ãƒ­ãƒƒãƒˆã®ä¸­èº«ã‚’è¦‹ã‚‹
         for (int i = 0; i < skillSlots.Length; i++)
         {
             if (skillSlots[i] != null)
             {
                 Debug.Log(
-                    "•Û‘¶‘O ƒXƒƒbƒg" + i +
-                    " / ƒXƒLƒ‹–¼F" + skillSlots[i].skillName +
-                    " / ƒAƒCƒRƒ“F" + skillSlots[i].icon
+                    "ä¿å­˜å‰ ã‚¹ãƒ­ãƒƒãƒˆ" + i +
+                    " / ã‚¹ã‚­ãƒ«åï¼š" + skillSlots[i].skillName +
+                    " / ã‚¢ã‚¤ã‚³ãƒ³ï¼š" + skillSlots[i].icon
                 );
             }
             else
             {
-                Debug.Log("•Û‘¶‘O ƒXƒƒbƒg" + i + " / ‹ó‚Å‚·");
+                Debug.Log("ä¿å­˜å‰ ã‚¹ãƒ­ãƒƒãƒˆ" + i + " / ç©ºã§ã™");
             }
         }
 
         ResultSkillStorage.Instance.SaveSkills(skillSlots);
 
-        Debug.Log("Œ»İ‚Ì4ƒXƒLƒ‹‚ğƒŠƒUƒ‹ƒg—p‚É•Û‘¶‚µ‚Ü‚µ‚½");
+        Debug.Log("ç¾åœ¨ã®4ã‚¹ã‚­ãƒ«ã‚’ãƒªã‚¶ãƒ«ãƒˆç”¨ã«ä¿å­˜ã—ã¾ã—ãŸ");
     }
 }

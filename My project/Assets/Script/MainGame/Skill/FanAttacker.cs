@@ -18,6 +18,7 @@ public class FanAttacker : MonoBehaviour
     void Start()
     {
         player = GetComponent<Player>();
+        Attack();
     }
 
     void Update()
@@ -38,7 +39,7 @@ public class FanAttacker : MonoBehaviour
         if (swingPrefab != null)
         {
             var fx = Instantiate(swingPrefab, transform.position, Quaternion.Euler(0, 0, facingAngle));
-            Destroy(fx, 0.3f);
+            Destroy(fx, 0.6f);
         }
 
         foreach (var col in Physics2D.OverlapCircleAll(transform.position, range, player.enemyLayer))

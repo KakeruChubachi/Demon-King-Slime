@@ -280,9 +280,9 @@ MonoBehaviour:
   target: {fileID: 0}
   spawnOrb: {fileID: 4293523638711481329, guid: 709616cbd870e824ba83ccdf6beee787, type: 3}
   dropRate: 1
-  SkillOrbprefab: {fileID: 587957185058556469, guid: 743fc6f473c257141b2906b51e85208c, type: 3}
+  SkillOrbprefab: {fileID: 587957185058556469, guid: 24575d70bee5e4644a1833572650978e, type: 3}
   skillDatas:
-  - {fileID: 11400000, guid: 562436b86be41564f9a0b3ef8b94a3bf, type: 2}
+  - {fileID: 11400000, guid: 11e98b540ba606a45bb2a0f5a57786f9, type: 2}
   movementEnabled: 1
   spriteRenderer: {fileID: 4066817243604815779}
   copiedskillData: {fileID: 0}

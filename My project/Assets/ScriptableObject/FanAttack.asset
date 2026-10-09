@@ -15,7 +15,7 @@ MonoBehaviour:
   effectName: "\u30AA\u30FC\u30AF\u306E\u68CD\u68D2"
   icon: {fileID: -3437022533778657886, guid: a6c1d036cd9d130439bb0d35b4d3c249, type: 3}
   description: 
-  swingPrefab: {fileID: 0}
+  swingPrefab: {fileID: 3021995842085556071, guid: d330e57005875e043bf7b8bd74657269, type: 3}
   baseDamage: 10
   interval: 2.5
   range: 3
