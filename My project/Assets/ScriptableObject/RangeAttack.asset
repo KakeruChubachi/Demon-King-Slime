@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ab5615b31b1d104db735dc4be78b9fe, type: 3}
   m_Name: RangeAttack
   m_EditorClassIdentifier: Assembly-CSharp::SkillData
-  skillName: RangeAttack
+  skillName: "\u30AF\u30E2\u306E\u7CF8"
   copiedHp: 0
   copiedMoveSpeed: 0
   copiedSprite: {fileID: 0}

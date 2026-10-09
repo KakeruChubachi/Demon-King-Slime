@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 201aba99f6b2aa047bcb479a2551590d, type: 3}
   m_Name: NewBulletSkill
   m_EditorClassIdentifier: Assembly-CSharp::BulletSkill
-  effectName: RangeAttack
+  effectName: "\u30AF\u30E2\u306E\u7CF8"
   icon: {fileID: -1333008625247902045, guid: 10403ce92d004be42931706fcfd6b9ef, type: 3}
   description: 
+  physicalAttackAmount: 5
