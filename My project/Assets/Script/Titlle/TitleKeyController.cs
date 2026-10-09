@@ -1,3 +1,4 @@
+
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,32 +15,21 @@ public class TitleKeyController : MonoBehaviour
     private void Start()
     {
         currentIndex = 0;
-
-        // 最初は全部の枠を消す
-        for (int i = 0; i < outlines.Length; i++)
-        {
-            outlines[i].enabled = false;
-        }
-
-        // 説明ボタンを選択
         SelectCurrentButton();
     }
 
     private void Update()
     {
-        // Aキー：左
         if (Input.GetKeyDown(KeyCode.A))
         {
             MoveLeft();
         }
 
-        // Dキー：右
         if (Input.GetKeyDown(KeyCode.D))
         {
             MoveRight();
         }
 
-        // スペース：決定
         if (Input.GetKeyDown(KeyCode.Space))
         {
             Decide();
@@ -48,6 +38,8 @@ public class TitleKeyController : MonoBehaviour
 
     private void MoveLeft()
     {
+        if (menuButtons.Length == 0) return;
+
         currentIndex--;
 
         if (currentIndex < 0)
@@ -60,6 +52,8 @@ public class TitleKeyController : MonoBehaviour
 
     private void MoveRight()
     {
+        if (menuButtons.Length == 0) return;
+
         currentIndex++;
 
         if (currentIndex >= menuButtons.Length)
@@ -75,19 +69,33 @@ public class TitleKeyController : MonoBehaviour
         // 全部の枠を消す
         for (int i = 0; i < outlines.Length; i++)
         {
-            outlines[i].enabled = false;
+            if (outlines[i] != null)
+            {
+                outlines[i].enabled = false;
+            }
         }
 
-        // 現在選択しているボタンの枠だけ表示
-        outlines[currentIndex].enabled = true;
+        // 選択中の枠を表示
+        if (currentIndex < outlines.Length &&
+            outlines[currentIndex] != null)
+        {
+            outlines[currentIndex].enabled = true;
+        }
 
-        // Unityの選択状態も変更
-        menuButtons[currentIndex].Select();
+        // 選択中のボタンを変更
+        if (currentIndex < menuButtons.Length &&
+            menuButtons[currentIndex] != null)
+        {
+            menuButtons[currentIndex].Select();
+        }
     }
 
     private void Decide()
     {
-        // 現在選択しているボタンを押す
-        menuButtons[currentIndex].onClick.Invoke();
+        if (currentIndex < menuButtons.Length &&
+            menuButtons[currentIndex] != null)
+        {
+            menuButtons[currentIndex].onClick.Invoke();
+        }
     }
 }
