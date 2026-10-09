@@ -19,7 +19,7 @@ MonoBehaviour:
     width: 1706.6667
     height: 869.3334
   m_ShowMode: 4
-  m_Title: Console
+  m_Title: Game
   m_RootView: {fileID: 2}
   m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
@@ -120,7 +120,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 168}
   m_MaxSize: {x: 24288, y: 24288}
   vertical: 0
-  controlID: 16001
+  controlID: 923
   draggingID: 0
 --- !u!114 &6
 MonoBehaviour:
@@ -146,7 +146,7 @@ MonoBehaviour:
   m_MinSize: {x: 100, y: 112}
   m_MaxSize: {x: 8096, y: 16192}
   vertical: 1
-  controlID: 16002
+  controlID: 924
   draggingID: 0
 --- !u!114 &7
 MonoBehaviour:
@@ -225,7 +225,7 @@ MonoBehaviour:
   m_MinSize: {x: 100, y: 168}
   m_MaxSize: {x: 8096, y: 24288}
   vertical: 1
-  controlID: 15959
+  controlID: 878
   draggingID: 0
 --- !u!114 &10
 MonoBehaviour:
@@ -246,8 +246,8 @@ MonoBehaviour:
     y: 0
     width: 500
     height: 299.33334
-  m_MinSize: {x: 200, y: 200}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 202, y: 226}
+  m_MaxSize: {x: 4002, y: 4026}
   m_ActualView: {fileID: 18}
   m_Panes:
   - {fileID: 18}
@@ -1560,27 +1560,29 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs:
-      - m_Data: 97092
+      m_SelectedIDs: []
       m_LastClickedID:
-        m_Data: 97092
+        m_Data: 0
       m_ExpandedIDs:
-      - m_Data: -120680
-      - m_Data: -118504
-      - m_Data: -62978
-      - m_Data: -61726
+      - m_Data: -72426
+      - m_Data: -71952
+      - m_Data: -70408
+      - m_Data: -69998
+      - m_Data: -62952
+      - m_Data: -61800
       - m_Data: 77386
-      - m_Data: 77470
-      - m_Data: 77484
-      - m_Data: 77618
-      - m_Data: 77654
-      - m_Data: 77690
-      - m_Data: 97092
-      - m_Data: 97340
+      - m_Data: 77608
+      - m_Data: 81730
+      - m_Data: 81738
+      - m_Data: 81790
+      - m_Data: 81824
+      - m_Data: 81942
+      - m_Data: 81950
+      - m_Data: 81960
       m_RenameOverlay:
         m_UserAcceptedRename: 0
-        m_Name: Main Camera
-        m_OriginalName: Main Camera
+        m_Name: 
+        m_OriginalName: 
         m_EditFieldRect:
           serializedVersion: 2
           x: 0
@@ -1588,10 +1590,10 @@ MonoBehaviour:
           width: 0
           height: 0
         m_UserData:
-          m_Data: 97264
+          m_Data: 0
         m_IsWaitingForDelay: 0
         m_IsRenaming: 0
-        m_OriginalEventType: 0
+        m_OriginalEventType: 11
         m_IsRenamingFilename: 0
         m_TrimLeadingAndTrailingWhitespace: 0
         m_ClientGUIView: {fileID: 10}
@@ -1651,7 +1653,7 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/prefab
+    - Assets/Scenes
     m_Globs: []
     m_ProductIds: 
     m_AnyWithAssetOrigin: 0
@@ -1661,7 +1663,7 @@ MonoBehaviour:
   m_ViewMode: 1
   m_StartGridSize: 16
   m_LastFolders:
-  - Assets/prefab
+  - Assets/Scenes
   m_LastFoldersGridSize: 16
   m_LastProjectPath: "D:\\MyClass\\2026\\\u30B2\u30FC\u30E0\u5236\u4F5CA\\Demon-KIng-Slime
     ver2.2\\My project"
@@ -1669,16 +1671,14 @@ MonoBehaviour:
     m_IsLocked: 0
   m_LastLocalAssetsSearchArea: 1
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 94.66669}
+    scrollPos: {x: 0, y: 26.666687}
     m_SelectedIDs:
-    - m_Data: 72582
+    - m_Data: 70366
     m_LastClickedID:
-      m_Data: 72582
+      m_Data: 70366
     m_ExpandedIDs:
     - m_Data: 0
-    - m_Data: 67172
-    - m_Data: 68040
-    - m_Data: 69422
+    - m_Data: 67216
     - m_Data: 1000000000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -1712,7 +1712,7 @@ MonoBehaviour:
       m_Data: 0
     m_ExpandedIDs:
     - m_Data: 0
-    - m_Data: 67172
+    - m_Data: 67216
     - m_Data: 1000000000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -1740,9 +1740,8 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-    m_SelectedInstanceIDs:
-    - m_Data: 97092
-    m_LastClickedInstanceID: 97092
+    m_SelectedInstanceIDs: []
+    m_LastClickedInstanceID: 0
     m_HadKeyboardFocusLastEvent: 1
     m_ExpandedInstanceIDs:
     - m_Data: 0
@@ -1753,8 +1752,8 @@ MonoBehaviour:
     - m_Data: 67924
     m_RenameOverlay:
       m_UserAcceptedRename: 0
-      m_Name: MainGame
-      m_OriginalName: MainGame
+      m_Name: 
+      m_OriginalName: 
       m_EditFieldRect:
         serializedVersion: 2
         x: 0
@@ -1762,10 +1761,10 @@ MonoBehaviour:
         width: 0
         height: 0
       m_UserData:
-        m_Data: 69422
+        m_Data: 0
       m_IsWaitingForDelay: 0
       m_IsRenaming: 0
-      m_OriginalEventType: 0
+      m_OriginalEventType: 11
       m_IsRenamingFilename: 1
       m_TrimLeadingAndTrailingWhitespace: 0
       m_ClientGUIView: {fileID: 12}
@@ -1825,7 +1824,7 @@ MonoBehaviour:
     m_ControlHash: -371814159
     m_PrefName: Preview_InspectorPreview
   m_LastInspectedObjectInstanceID: -1
-  m_LastVerticalScrollValue: 432
+  m_LastVerticalScrollValue: 236.66663
   m_GlobalObjectId: 
   m_InspectorMode: 0
   m_LockTracker:
