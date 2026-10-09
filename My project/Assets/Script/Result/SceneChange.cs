@@ -7,4 +7,12 @@ public class SceneChange : MonoBehaviour
     {
         SceneManager.LoadScene("TitleScene");
     }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            GoToTitle();
+        }
+    }
 }
