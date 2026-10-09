@@ -1,21 +1,21 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "NewBulletSkill", menuName = "Skill/Effect/BulletSkill")]
-public class BulletSkill : Effect
+[CreateAssetMenu(fileName = "NewWideAttack", menuName = "Skill/Effect/WideAttack")]
+public class WideAttack : Effect
 {
     public int physicalAttackAmount = 5;
     int appliedAmount;
+
     public override void ApplyEffect(Player player, float multiplier)
     {
         appliedAmount = Mathf.RoundToInt(physicalAttackAmount * multiplier);
 
-        player.BulletSkill(appliedAmount);
+        player.WideAttack(appliedAmount);
 
-        Debug.Log("遠距離攻撃を発動しました。");
+        Debug.Log("ボス棍棒攻撃を発動しました。ダメージ：" + appliedAmount);
     }
 
     public override void RemoveEffect(Player player)
     {
-
     }
 }

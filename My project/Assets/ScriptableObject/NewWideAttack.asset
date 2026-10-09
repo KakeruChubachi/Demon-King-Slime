@@ -9,10 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 41132dfe04bc3e74286997ca7f33686e, type: 3}
-  m_Name: Newkonbou
-  m_EditorClassIdentifier: Assembly-CSharp::abc
-  effectName: "\u30B4\u30D6\u30EA\u30F3\u306E\u68CD\u68D2"
-  icon: {fileID: -2196035622865519434, guid: 0621773a1915c2a40bd6ab73c25ab1fa, type: 3}
+  m_Script: {fileID: 11500000, guid: ef33afc5866984f43a65d84c93352af0, type: 3}
+  m_Name: NewWideAttack
+  m_EditorClassIdentifier: Assembly-CSharp::WideAttack
+  effectName: WideAttack
+  icon: {fileID: -3437022533778657886, guid: a6c1d036cd9d130439bb0d35b4d3c249, type: 3}
   description: 
   physicalAttackAmount: 5

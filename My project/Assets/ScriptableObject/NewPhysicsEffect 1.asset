@@ -9,9 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 201aba99f6b2aa047bcb479a2551590d, type: 3}
-  m_Name: NewBulletSkill
-  m_EditorClassIdentifier: Assembly-CSharp::BulletSkill
-  effectName: RangeAttack
-  icon: {fileID: -1333008625247902045, guid: 10403ce92d004be42931706fcfd6b9ef, type: 3}
+  m_Script: {fileID: 11500000, guid: 9bf7b23fed81e1d4491913d017b260c8, type: 3}
+  m_Name: NewPhysicsEffect 1
+  m_EditorClassIdentifier: Assembly-CSharp::Physics
+  effectName: 
+  icon: {fileID: 0}
   description: 
+  physicsAmount: 5

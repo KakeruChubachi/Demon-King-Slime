@@ -202,6 +202,24 @@ public class Player : MonoBehaviour
         }
     }
 
+    // 範囲攻撃スキル
+    public void WideAttack(int damage)
+    {
+        Vector2 attackPosition = (Vector2)transform.position + facingDirection * 1.0f;
+
+        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPosition, 2.5f, enemyLayer);
+
+        foreach (Collider2D enemy in hitEnemies)
+        {
+            Enemy e = enemy.GetComponent<Enemy>();
+
+            if (e != null)
+            {
+                e.TakeDamage(damage, Enemy.AttackType.Physical);
+            }
+        }
+    }
+
     // ── 遠距離攻撃 ──
     void RangedAttack()
     {
@@ -264,8 +282,9 @@ public class Player : MonoBehaviour
 
 
     // ── 遠距離攻撃（スキル） ──
-public void BulletSkill()
+public void BulletSkill(int damage)
     {
+
         RangedAttack();
     }
 

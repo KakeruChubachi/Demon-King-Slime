@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: HeroSwordSkill
   m_EditorClassIdentifier: Assembly-CSharp::HeroSword
   effectName: "\u52C7\u8005\u306E\u5263"
+  icon: {fileID: -7960818194000818557, guid: ef41c3f64d1223944b093da135549748, type: 3}
   description: 
   damage: 5

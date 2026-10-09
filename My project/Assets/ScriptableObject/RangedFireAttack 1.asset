@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ab5615b31b1d104db735dc4be78b9fe, type: 3}
   m_Name: RangedFireAttack 1
   m_EditorClassIdentifier: Assembly-CSharp::SkillData
-  skillName: 
+  skillName: FireAttack
   copiedHp: 0
   copiedMoveSpeed: 0
   copiedSprite: {fileID: 0}
-  icon: {fileID: 0}
+  icon: {fileID: 4945239985283531135, guid: 222cbf24da7283447b394676c30b0361, type: 3}
   effects:
   - {fileID: 11400000, guid: 7c86a56b0148fd6489b6af8988f47248, type: 2}

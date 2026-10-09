@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ab5615b31b1d104db735dc4be78b9fe, type: 3}
   m_Name: PhysicsSkill
   m_EditorClassIdentifier: Assembly-CSharp::SkillData
-  skillName: skill
+  skillName: Attack
   copiedHp: 0
   copiedMoveSpeed: 0
   copiedSprite: {fileID: 0}
-  icon: {fileID: 0}
+  icon: {fileID: 2738577844032149819, guid: cd1e60e680f339c4696d2f83b86cb71e, type: 3}
   effects:
-  - {fileID: 11400000, guid: 7c86a56b0148fd6489b6af8988f47248, type: 2}
+  - {fileID: 11400000, guid: 9db464c72c4faa44f8e871c03fdc4f18, type: 2}

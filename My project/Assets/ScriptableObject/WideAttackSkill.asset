@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3ab5615b31b1d104db735dc4be78b9fe, type: 3}
-  m_Name: PhysicsBoost
+  m_Name: WideAttackSkill
   m_EditorClassIdentifier: Assembly-CSharp::SkillData
-  skillName: 
+  skillName: WideAttack
   copiedHp: 0
   copiedMoveSpeed: 0
   copiedSprite: {fileID: 0}
-  icon: {fileID: 0}
+  icon: {fileID: -3437022533778657886, guid: a6c1d036cd9d130439bb0d35b4d3c249, type: 3}
   effects:
-  - {fileID: 11400000, guid: cd754d8bf8288524f9df0b74542205c6, type: 2}
+  - {fileID: 11400000, guid: df646d752eb945b4f9ace786cf4475cd, type: 2}
