@@ -2684,7 +2684,7 @@ MonoBehaviour:
   playerRadius: 1
   attackRangeMultiplier: 2
   attackCooldown: 1
-  hp: 10000000
+  hp: 10
   exp: 1
   nowLevel: 1
   levelUpExp: 20
